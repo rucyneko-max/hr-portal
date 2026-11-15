@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#1E3F78">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<title>법령 찾아보기</title>
+<style>
+:root{--bg:#EDF1F7;--surface:#fff;--ink:#172033;--muted:#5B6780;--line:#D9E0EC;--primary:#1E3F78;--on-primary:#fff;--mark:#FFD24A;--soft:#E4EAF4;--warn-bg:#FFF3CC;--warn-ink:#5B4300;--shadow:0 1px 2px rgba(23,32,51,.05),0 8px 24px -10px rgba(23,32,51,.16)}
+:root[data-theme=dark]{--bg:#0E1626;--surface:#162238;--ink:#E6ECF7;--muted:#9AA8C4;--line:#27385A;--primary:#7FA6F0;--on-primary:#0B1A33;--soft:#1C2C49;--warn-bg:#3A3010;--warn-ink:#FFE9A6;--shadow:none}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0E1626;--surface:#162238;--ink:#E6ECF7;--muted:#9AA8C4;--line:#27385A;--primary:#7FA6F0;--on-primary:#0B1A33;--soft:#1C2C49;--warn-bg:#3A3010;--warn-ink:#FFE9A6;--shadow:none}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard Variable",Pretendard,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;font-size:16px;line-height:1.65;word-break:keep-all;overflow-wrap:break-word}
+a{color:inherit}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--primary);outline-offset:2px;border-radius:6px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:8px;top:-60px;background:var(--primary);color:var(--on-primary);padding:8px 14px;border-radius:8px;z-index:50}
+.skip:focus{top:8px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:64px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;min-width:0}
+.brand svg{flex:none}
+.brand span{display:flex;flex-direction:column;line-height:1.25;min-width:0}
+.brand b{font-size:16px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand i{font-style:normal;font-size:12.5px;color:var(--muted)}
+.mainnav{display:none;gap:4px;flex:1;margin-left:12px}
+.mainnav a{padding:8px 14px;border-radius:999px;text-decoration:none;font-weight:600;font-size:15px;color:var(--muted)}
+.mainnav a:hover{background:var(--soft);color:var(--ink)}
+@media(min-width:820px){.mainnav{display:flex}}
+.acts{display:flex;gap:6px;flex:none}
+.pill{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 14px;font-size:14px;cursor:pointer;min-height:38px}
+.pill:hover{border-color:var(--primary)}
+.sub{padding:18px 0 0;font-size:14.5px}
+.sub a{color:var(--muted);text-decoration:none;display:inline-flex;align-items:center;min-height:36px}
+.sub a:hover{color:var(--primary);text-decoration:underline}
+h1{font-size:clamp(28px,6.2vw,42px);line-height:1.25;letter-spacing:-.02em;margin:0 0 10px;font-weight:800}
+h2{font-size:20px;margin:0 0 14px;letter-spacing:-.01em}
+h3{font-size:15px;margin:0 0 8px;color:var(--muted);font-weight:600}
+.lead{color:var(--muted);margin:0;max-width:36em}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:46px;padding:0 20px;border-radius:12px;border:1px solid var(--primary);background:var(--primary);color:var(--on-primary);font-weight:700;text-decoration:none;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--primary)}
+.note{background:var(--warn-bg);color:var(--warn-ink);border-radius:12px;padding:14px 16px;font-size:15px}
+.note b{display:block;margin-bottom:2px}
+footer{margin-top:56px;border-top:1px solid var(--line);padding:28px 0 48px;color:var(--muted);font-size:13.5px}
+footer b{color:var(--ink)}
+footer p{margin:0 0 6px}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+[hidden]{display:none!important}
+
+.head{padding:18px 0 6px}
+.search{position:relative;display:block;margin-top:18px;max-width:560px}
+.search input{width:100%;min-height:50px;border-radius:14px;border:1px solid var(--line);background:var(--surface);padding:0 16px;font-size:16px}
+.search input:focus{border-color:var(--primary);outline:3px solid color-mix(in srgb,var(--primary) 25%,transparent);outline-offset:0}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:14px 0 6px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chips button{flex:none;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:8px 16px;font-weight:600;cursor:pointer;min-height:40px}
+.chips button[aria-pressed=true]{background:var(--primary);color:var(--on-primary);border-color:var(--primary)}
+.group{margin-top:28px}
+.group h2{display:flex;align-items:center;gap:10px;font-size:19px;margin:0 0 12px}
+.group h2 i{width:9px;height:9px;border-radius:50%;background:var(--c,var(--primary))}
+.items{list-style:none;margin:0;padding:0;display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
+.law{padding:18px 18px 16px;display:flex;flex-direction:column;gap:8px}
+.law h3{margin:0;color:var(--ink);font-size:17px;line-height:1.4}
+.law p{margin:0;color:var(--muted);font-size:14.5px}
+.refs{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto;padding-top:6px}
+.refs a{border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:6px 12px;font-size:13.5px;text-decoration:none;font-weight:600}
+.refs a:hover{border-color:var(--primary);color:var(--primary)}
+.refs a.tool{background:var(--primary);color:var(--on-primary);border-color:var(--primary)}
+.help{margin-top:32px;padding:22px;display:grid;gap:12px}
+.help h2{margin:0}
+.help ul{margin:0;padding-left:20px}
+.help li+li{margin-top:6px}
+.empty{display:none;padding:22px;text-align:center;color:var(--muted);margin-top:24px}
+.wide{margin-top:26px;padding:20px 22px}
+.wide h2{margin-top:0}
+.sites{list-style:none;margin:0;padding:0;display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
+.sites a{display:block;padding:12px 14px;border:1px solid var(--line);border-radius:12px;text-decoration:none;background:var(--bg)}
+.sites a:hover{border-color:var(--primary)}
+.sites b{display:block;font-size:15.5px}
+.sites span{color:var(--muted);font-size:13.5px}
+</style>
+</head>
+<body data-title="법령 찾아보기">
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="top"><div class="wrap bar">
+  <a class="brand" href="index.html" aria-label="처음으로">
+    <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><rect width="34" height="34" rx="9" fill="var(--primary)"/><path d="M9 12.5A3.5 3.5 0 0 1 12.5 9h9a3.5 3.5 0 0 1 3.5 3.5v5a3.5 3.5 0 0 1-3.5 3.5H17l-4 3.5V21h-.5A3.5 3.5 0 0 1 9 17.5z" fill="var(--on-primary)"/><circle cx="25.5" cy="9" r="4" fill="#FFD24A"/></svg>
+    <span><b data-cfg="company"></b><i>직원 포털 · <span data-cfg="team" style="display:inline"></span></i></span>
+  </a>
+  <nav class="mainnav" aria-label="주 메뉴"><a href="index.html">홈</a><a href="diagnosis.html">상황별 안내</a><a href="calculators.html#yearend">소득세·연말정산</a><a href="calendar.html">일정·도구</a><a href="laws.html">법령·복지</a></nav>
+  <nav class="acts" aria-label="도구">
+    <button class="pill" id="installBtn" type="button">앱 설치</button>
+    <button class="pill" id="themeBtn" type="button" aria-label="화면 밝기 바꾸기">어둡게</button>
+  </nav>
+</div></header>
+
+<main id="main" class="wrap">
+  <p class="sub"><a href="index.html">← 처음으로</a></p>
+  <div class="head">
+    <h1>직원이 자주 찾는 법령</h1>
+    <p class="lead">휴가, 임금, 출산·육아, 퇴직, 세금처럼 직장에서 자주 묻는 주제를 쉬운 말로 풀고, 법령 원문의 해당 조문으로 바로 이어 줍니다. 원문은 국가법령정보센터에서 열립니다.</p>
+    <label class="search"><span class="sr">주제나 법령 검색</span><input id="q" type="search" placeholder="예: 연차, 퇴직금, 괴롭힘, 영유아보육법" autocomplete="off" enterkeyhint="search"></label>
+    <div class="chips" id="chips" role="group" aria-label="분류"></div>
+  </div>
+  <div id="list"></div>
+  <p class="empty card" id="empty" role="status">찾는 주제가 없습니다. 법령 이름을 <a href="https://www.law.go.kr/" target="_blank" rel="noopener">국가법령정보센터</a>에서 직접 검색해 보세요.</p>
+
+  <section class="wide card" aria-labelledby="siteH">
+    <h2 id="siteH">직접 찾아볼 수 있는 사이트</h2>
+    <ul class="sites" id="sites"></ul>
+  </section>
+
+  <section class="help card" aria-labelledby="helpH">
+    <h2 id="helpH">내 권리가 지켜지지 않는다고 느낀다면</h2>
+    <ul>
+      <li>먼저 <a data-mail href="#"></a> 또는 <a data-tel href="#"><span data-cfg="phone"></span></a>로 인사팀에 확인하세요. 오해나 계산 차이로 풀리는 경우가 많습니다.</li>
+      <li>그래도 풀리지 않으면 고용노동부 상담센터(국번 없이 1350)나 노동포털에서 상담하거나 신고할 수 있습니다.</li>
+      <li>임금 체불, 부당해고, 직장 내 괴롭힘은 각각 절차와 기한이 있으니 날짜와 증거(근로계약서, 급여명세서, 문자)를 보관해 두세요.</li>
+    </ul>
+  </section>
+  <p class="lead" style="margin-top:18px;font-size:14px">조문 요약은 이해를 돕기 위한 설명이며 법적 판단이 아닙니다. 법령은 개정될 수 있으니 원문의 시행일을 확인하세요. 기준일: <span data-cfg="rulesAsOf"></span></p>
+</main>
+<footer><div class="wrap">
+  <p><b data-cfg="company"></b> <b data-cfg="team"></b> · <span data-cfg="location"></span></p>
+  <p><a data-tel href="#"><span data-cfg="phone"></span></a> <span data-cfg="phoneExt"></span> · <a data-mail href="#"></a> · <span data-cfg="hours"></span></p>
+  <p>이 포털의 안내와 계산 결과는 참고용입니다. 법정 기준은 <span data-cfg="rulesAsOf"></span> 기준이며, 사내 규정이 법정 기준보다 유리하면 사내 규정을 따릅니다. 정확한 처리는 인사팀 확인 후 확정됩니다.</p>
+</div></footer>
+
+<script>
+/* 이 파일만 고치면 모든 페이지에 반영됩니다. */
+window.HR_CONFIG = {
+  company: "○○주식회사",
+  team: "인사팀",
+  phone: "02-0000-0000",
+  phoneExt: "내선 100",
+  email: "hr@example.com",
+  hours: "평일 09:00–18:00 (점심 12:00–13:00)",
+  location: "본사 ○층 인사팀",
+  // 사내 시스템 링크: url을 실제 주소로 바꾸세요
+  internalLinks: [
+    { name: "근태·휴가 시스템", desc: "연차 신청, 잔여 연차 확인", url: "#" },
+    { name: "급여명세서", desc: "월별 급여명세서 조회", url: "#" },
+    { name: "증명서 발급", desc: "재직·경력증명서 신청", url: "#" },
+    { name: "복지 포털", desc: "복지 포인트, 건강검진", url: "#" }
+  ],
+  // 공공기관 링크는 필요하면 추가·삭제하세요
+  publicLinks: [
+    { name: "고용24", desc: "육아휴직·실업급여 신청", url: "https://www.work24.go.kr/" },
+    { name: "4대사회보험 정보연계센터", desc: "가입 내역 조회", url: "https://www.4insure.or.kr/" },
+    { name: "국민연금", desc: "연금 가입 내역·예상 연금", url: "https://www.nps.or.kr/" },
+    { name: "국민건강보험", desc: "보험료 조회·피부양자", url: "https://www.nhis.or.kr/" },
+    { name: "홈택스", desc: "연말정산 간소화·소득금액증명", url: "https://www.hometax.go.kr/" },
+    { name: "국가법령정보센터", desc: "근로기준법 등 원문", url: "https://www.law.go.kr/" }
+  ],
+  // 4대보험 요율(근로자 부담, %): 매년 1월·7월 확인 후 고치세요
+  rates: { pension: 4.75, health: 3.595, ltc: 13.14, employment: 0.9, pensionMin: 400000, pensionMax: 6370000 },
+  // 연말정산 계산 기준(2026년 귀속). 세법이 바뀌면 인사팀이 확인 후 고치세요.
+  tax: {
+    // [과세표준 상한, 세율, 누진공제] 마지막 줄의 null은 상한 없음
+    brackets: [[14000000,0.06,0],[50000000,0.15,1260000],[88000000,0.24,5760000],[150000000,0.35,15440000],[300000000,0.38,19940000],[500000000,0.40,25940000],[1000000000,0.42,35940000],[null,0.45,65940000]],
+    basicDeduction: 1500000,          // 기본공제 1인당
+    standardCredit: 130000,           // 표준세액공제
+    childCredit: [250000, 300000, 400000], // 8세 이상 자녀: 첫째, 둘째, 셋째부터 1명당
+    cardMinRate: 0.25,                // 총급여의 25% 초과 사용분부터 공제
+    cardCreditRate: 0.15,             // 신용카드
+    cardDebitRate: 0.30,              // 체크카드·현금영수증
+    cardCaps: [[70000000,3000000],[120000000,2500000],[null,2000000]] // [총급여 상한, 공제 한도]
+  },
+  // 가산세·환급 기준(국세기본법). 개정되면 인사팀이 확인 후 고치세요.
+  penalty: {
+    noFile: 0.20, underFile: 0.10, fraud: 0.40, // 무신고 20%, 과소신고 10%, 부정행위 40%
+    daily: 0.00022                               // 납부지연 1일 10만분의 22
+  },
+  // 위탁보육 안내 페이지에 나오는 우리 회사 정보. 비워 두면 "인사팀에 문의하세요"로 표시됩니다.
+  childcare: {
+    type: "",       // 예: 위탁보육 / 직장어린이집 / 보육수당 지급
+    provider: "",   // 예: ○○어린이집(구청 인가)
+    target: "",     // 예: 만 0~5세 자녀
+    share: "",      // 예: 보육료의 50%를 회사가 부담
+    apply: "",      // 예: 인사팀에 신청서 제출
+    deadline: "",   // 예: 매월 20일까지
+    docs: []        // 예: ["재직증명서","가족관계증명서"]
+  },
+  rulesAsOf: "2026년 11월"
+};
+
+</script>
+<script src="config.js"></script>
+<script>
+(function(){
+  var C=window.HR_CONFIG||{};
+  var root=document.documentElement;
+  try{var t=localStorage.getItem('hr-theme');if(t)root.setAttribute('data-theme',t)}catch(e){}
+  document.querySelectorAll('[data-cfg]').forEach(function(el){var v=C[el.getAttribute('data-cfg')];if(v!=null)el.textContent=v});
+  document.querySelectorAll('[data-tel]').forEach(function(el){el.href='tel:'+String(C.phone||'').replace(/[^0-9+]/g,'')});
+  document.querySelectorAll('[data-mail]').forEach(function(el){el.href='mailto:'+(C.email||'');if(!el.textContent.trim())el.textContent=C.email});
+  var pg=document.body.getAttribute('data-title')||'';
+  document.title=(pg?pg+' · ':'')+(C.company||'')+' '+(C.team||'');
+  var tb=document.getElementById('themeBtn');
+  function isDark(){var a=root.getAttribute('data-theme');return a?a==='dark':matchMedia('(prefers-color-scheme: dark)').matches}
+  function label(){if(tb)tb.textContent=isDark()?'밝게':'어둡게'}
+  label();
+  if(tb)tb.addEventListener('click',function(){var n=isDark()?'light':'dark';root.setAttribute('data-theme',n);try{localStorage.setItem('hr-theme',n)}catch(e){}label()});
+  if('serviceWorker' in navigator&&location.protocol.indexOf('http')===0){navigator.serviceWorker.register('sw.js').catch(function(){})}
+  window.HR_STORE={get:function(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set:function(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+})();
+
+</script>
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)};
+  var CAT=[
+    {id:'time',t:'근로시간·휴가',c:'#2F8F6B'},
+    {id:'pay',t:'임금·퇴직',c:'#C28A1E'},
+    {id:'fam',t:'출산·육아·가족',c:'#C4577F'},
+    {id:'work',t:'해고·괴롭힘·규칙',c:'#5B6FD6'},
+    {id:'tax',t:'세금·보험',c:'#1E3F78'}
+  ];
+  var BL='근로기준법',NE='남녀고용평등과 일·가정 양립 지원에 관한 법률',RB='근로자퇴직급여 보장법';
+  var L=[
+   {c:'time',t:'연차휴가',s:'1년간 80% 이상 출근하면 15일이 생기고, 3년 이상 근속하면 2년마다 1일씩 더해져 최대 25일입니다. 입사 1년 미만은 1개월 개근마다 1일입니다.',r:[[BL,60]],tool:['calculators.html#leave','연차 계산기'],k:'연차 휴가 연차수당 미사용'},
+   {c:'time',t:'근로시간과 연장근로 한도',s:'법정 근로시간은 하루 8시간, 주 40시간입니다. 당사자가 합의하면 연장근로를 주 12시간까지 할 수 있습니다.',r:[[BL,50],[BL,53]],k:'근로시간 52시간 연장근로 초과근무 야근'},
+   {c:'time',t:'연장·야간·휴일 수당',s:'연장·야간·휴일 근로에는 통상임금의 50%를 더해 지급합니다. 휴일근로가 8시간을 넘는 부분은 100%를 더합니다. 5명 이상 사업장에 적용됩니다.',r:[[BL,56]],k:'수당 야근수당 야간 휴일 가산'},
+   {c:'time',t:'휴게시간과 주휴일',s:'근로시간이 4시간이면 30분, 8시간이면 1시간 이상 휴게시간을 줍니다. 1주에 평균 1회 이상 유급휴일(주휴일)을 줍니다.',r:[[BL,54],[BL,55]],k:'휴게 점심시간 주휴 주휴수당'},
+   {c:'time',t:'단시간·근로시간 단축 근로자의 근로조건',s:'통상근로자보다 소정근로시간이 짧으면 근로조건을 시간에 비례해 정합니다. 주 4일 근무자의 연차가 시간 비례로 계산되는 근거입니다.',r:[[BL,18]],tool:['calculators.html#peak','임금피크 주4일 연차 계산기'],k:'단시간 주4일 임금피크 시간비례 연차'},
+   {c:'pay',t:'임금 지급 원칙',s:'임금은 통화로 직접 전액을 매월 1회 이상 정해진 날짜에 줍니다. 법에 근거가 없으면 마음대로 공제할 수 없습니다.',r:[[BL,43]],k:'월급 임금 지급 공제 체불'},
+   {c:'pay',t:'급여명세서',s:'회사는 임금을 줄 때 지급 항목, 계산 방법, 공제 내역을 적은 명세서를 줘야 합니다.',r:[[BL,48]],tool:['calculators.html#insurance','월급 실수령 계산기'],k:'급여명세서 임금명세서 월급 공제'},
+   {c:'pay',t:'퇴직금',s:'계속 근로 1년 이상이고 주 15시간 이상 일했다면 퇴직금을 받습니다. 퇴직일부터 14일 이내 지급이 원칙입니다.',r:[[RB,8],[RB,9]],tool:['calculators.html#severance','퇴직금 계산기'],k:'퇴직금 퇴사 평균임금 14일'},
+   {c:'pay',t:'최저임금',s:'최저임금은 해마다 고시되며 모든 사업장에 적용됩니다. 최저임금보다 적게 정한 계약은 그 부분이 무효입니다.',r:[['최저임금법',6]],k:'최저임금 시급 월급'},
+   {c:'pay',t:'임금피크제와 정년',s:'정년은 60세 이상이어야 하고, 정년 연장에 따른 임금체계 개편은 노사 합의로 정합니다. 감액률이 법으로 정해져 있지는 않습니다.',r:[['고용상 연령차별금지 및 고령자고용촉진에 관한 법률',19],['고용상 연령차별금지 및 고령자고용촉진에 관한 법률','19의2']],tool:['calculators.html#peak','임금피크 주4일 연차 계산기'],k:'임금피크 정년 고령자 시니어 감액'},
+   {c:'fam',t:'출산전후휴가',s:'출산 전후로 연속 90일(쌍둥이 이상은 120일)을 쉴 수 있고, 출산 후에 45일 이상이 남아야 합니다.',r:[[BL,74]],tool:['diagnosis.html?s=family','출산·육아 안내'],k:'출산 휴가 임신 산전후'},
+   {c:'fam',t:'배우자 출산휴가',s:'배우자가 출산하면 유급 20일을 쓸 수 있습니다. 출산일부터 120일 이내에 청구하고 3회까지 나눠 쓸 수 있습니다.',r:[[NE,'18의2']],tool:['diagnosis.html?s=family','출산·육아 안내'],k:'배우자 출산휴가 아빠'},
+   {c:'fam',t:'육아휴직',s:'만 8세 이하(초등 2학년 이하) 자녀를 키우는 근로자는 최대 1년 쓸 수 있습니다. 시작 30일 전에 신청합니다.',r:[[NE,19]],tool:['diagnosis.html?s=family','출산·육아 안내'],k:'육아휴직 육아 자녀'},
+   {c:'fam',t:'육아기 근로시간 단축',s:'같은 대상 자녀를 키우는 근로자는 주 15시간 이상 35시간 이하로 근로시간을 줄일 수 있습니다.',r:[[NE,'19의2']],k:'근로시간 단축 육아기 단축근무'},
+   {c:'fam',t:'가족돌봄휴가·휴직',s:'가족을 돌봐야 할 때 연 최대 10일의 가족돌봄휴가나 가족돌봄휴직을 신청할 수 있습니다.',r:[[NE,'22의2']],k:'가족돌봄 간병 휴직'},
+   {c:'fam',t:'직장어린이집과 위탁보육',s:'일정 규모 이상 사업장은 직장어린이집을 설치하거나 다른 어린이집에 위탁해야 합니다. 신청과 지원은 별도 페이지에서 안내합니다.',r:[['영유아보육법',14]],tool:['childcare.html','위탁보육 안내'],k:'위탁보육 직장어린이집 보육료 보육 어린이집'},
+   {c:'work',t:'해고 제한과 해고예고',s:'정당한 이유 없이 해고할 수 없고, 해고하려면 30일 전에 알리거나 30일분 통상임금을 줘야 합니다. 5명 이상 사업장에 적용됩니다.',r:[[BL,23],[BL,26]],k:'해고 부당해고 해고예고 권고사직'},
+   {c:'work',t:'직장 내 괴롭힘',s:'직장에서의 지위나 관계를 이용해 업무 범위를 넘어 고통을 주는 행위는 금지됩니다. 신고를 받으면 회사는 조사하고 조치해야 합니다.',r:[[BL,'76의2'],[BL,'76의3']],k:'괴롭힘 갑질 신고 폭언'},
+   {c:'work',t:'취업규칙을 불리하게 바꿀 때',s:'근로자에게 불리하게 바꾸려면 근로자 과반수 노동조합(없으면 근로자 과반수)의 동의를 받아야 합니다. 임금피크 도입이 여기에 해당할 수 있습니다.',r:[[BL,94]],k:'취업규칙 불이익 변경 동의 임금피크'},
+   {c:'work',t:'근로조건 명시',s:'근로계약을 맺을 때 임금, 소정근로시간, 휴일, 연차 등을 서면으로 밝혀야 합니다.',r:[[BL,17]],k:'근로계약서 근로조건 서면'},
+   {c:'tax',t:'임원 퇴직소득 한도',s:'임원의 퇴직소득은 한도가 있고, 한도를 넘는 부분은 퇴직소득이 아니라 근로소득으로 과세됩니다. 한도는 총급여 평균에 근무기간과 배수를 곱해 구합니다.',r:[['소득세법',22],['소득세법 시행령','42의2']],tool:['calculators.html#exec','한도초과 계산기'],k:'임원 퇴직금 한도 초과 퇴직소득 근로소득'},
+   {c:'tax',t:'퇴직소득세와 연말정산',s:'퇴직금에는 퇴직소득세가, 매달 급여에는 소득세가 원천징수되고 이듬해 초 연말정산으로 정산합니다. 공제를 빠뜨렸으면 5년 안에 경정청구할 수 있습니다.',r:[['소득세법']],tool:['calculators.html#yearend','연말정산 계산기'],k:'소득세 연말정산 퇴직소득세 경정청구 공제'},
+   {c:'tax',t:'4대보험',s:'국민연금, 건강보험, 고용보험, 산재보험이 있습니다. 근로자는 앞의 세 가지와 장기요양보험료를 내고, 산재보험은 회사가 전액 부담합니다.',r:[['국민연금법'],['국민건강보험법'],['고용보험법'],['산업재해보상보험법']],tool:['calculators.html#insurance','월급 실수령 계산기'],k:'4대보험 국민연금 건강보험 고용보험 산재'}
+  ];
+  var SITES=[
+    ['국가법령정보센터','법령·시행령·판례 원문','https://www.law.go.kr/'],
+    ['찾기 쉬운 생활법령정보','일상 용어로 풀어 쓴 법령 안내','https://www.easylaw.go.kr/'],
+    ['고용노동부','근로기준 안내와 민원','https://www.moel.go.kr/'],
+    ['노동포털','근로감독 신청·진정·상담','https://labor.moel.go.kr/'],
+    ['근로복지공단','산재·직장어린이집 지원','https://www.comwel.or.kr/'],
+    ['국세청 홈택스','세금 신고·증명 발급','https://www.hometax.go.kr/']
+  ];
+  var cur='all';
+  function art(a){var m=String(a).match(/^(\d+)(?:의(\d+))?$/);return m?'제'+m[1]+'조'+(m[2]?'의'+m[2]:''):''}
+  function url(name,a){return encodeURI('https://www.law.go.kr/법령/'+name+(a?'/'+art(a):''))}
+  function esc(x){return String(x).replace(/&/g,'&amp;').replace(/</g,'&lt;')}
+  function card(x){
+    var refs=x.r.map(function(r){var a=r[1],lab=r[0].replace('고용상 연령차별금지 및 고령자고용촉진에 관한 법률','고령자고용법').replace('남녀고용평등과 일·가정 양립 지원에 관한 법률','남녀고용평등법');
+      return '<a href="'+url(r[0],a)+'" target="_blank" rel="noopener">'+esc(lab)+(a?' '+art(a):'')+'</a>'}).join('');
+    var tool=x.tool?'<a class="tool" href="'+x.tool[0]+'">'+esc(x.tool[1])+'</a>':'';
+    return '<li class="law card"><h3>'+esc(x.t)+'</h3><p>'+esc(x.s)+'</p><div class="refs">'+refs+tool+'</div></li>';
+  }
+  function render(){
+    var q=$('q').value.trim().toLowerCase(),shown=0,h='';
+    CAT.forEach(function(c){
+      if(cur!=='all'&&cur!==c.id)return;
+      var list=L.filter(function(x){return x.c===c.id&&(!q||(x.t+' '+x.s+' '+x.k+' '+x.r.map(function(r){return r[0]}).join(' ')).toLowerCase().indexOf(q)>-1)});
+      if(!list.length)return;shown+=list.length;
+      h+='<section class="group" style="--c:'+c.c+'" aria-labelledby="g-'+c.id+'"><h2 id="g-'+c.id+'"><i></i>'+c.t+'</h2><ul class="items">'+list.map(card).join('')+'</ul></section>';
+    });
+    $('list').innerHTML=h;$('empty').style.display=shown?'none':'block';
+  }
+  function chips(){var all=[{id:'all',t:'전체'}].concat(CAT);$('chips').innerHTML=all.map(function(c){return '<button type="button" data-c="'+c.id+'" aria-pressed="'+(cur===c.id)+'">'+c.t+'</button>'}).join('')}
+  $('chips').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;cur=b.dataset.c;chips();render()});
+  $('q').addEventListener('input',render);
+  $('sites').innerHTML=SITES.map(function(s){return '<li><a href="'+s[2]+'" target="_blank" rel="noopener"><b>'+s[0]+'</b><span>'+s[1]+'</span></a></li>'}).join('');
+  chips();render();
+})();
+</script>
+</body>
+</html>

@@ -96,7 +96,7 @@ details .row2{margin-top:12px}
     <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><rect width="34" height="34" rx="9" fill="var(--primary)"/><path d="M9 12.5A3.5 3.5 0 0 1 12.5 9h9a3.5 3.5 0 0 1 3.5 3.5v5a3.5 3.5 0 0 1-3.5 3.5H17l-4 3.5V21h-.5A3.5 3.5 0 0 1 9 17.5z" fill="var(--on-primary)"/><circle cx="25.5" cy="9" r="4" fill="#FFD24A"/></svg>
     <span><b data-cfg="company"></b><i>직원 포털 · <span data-cfg="team" style="display:inline"></span></i></span>
   </a>
-  <nav class="mainnav" aria-label="주 메뉴"><a href="index.html">홈</a><a href="diagnosis.html">상황별 안내</a><a href="calculators.html#yearend">소득세·연말정산</a><a href="calendar.html">일정·도구</a></nav>
+  <nav class="mainnav" aria-label="주 메뉴"><a href="index.html">홈</a><a href="diagnosis.html">상황별 안내</a><a href="calculators.html#yearend">소득세·연말정산</a><a href="calendar.html">일정·도구</a><a href="laws.html">법령·복지</a></nav>
   <nav class="acts" aria-label="도구">
     <button class="pill" id="installBtn" type="button">앱 설치</button>
     <button class="pill" id="themeBtn" type="button" aria-label="화면 밝기 바꾸기">어둡게</button>
@@ -107,6 +107,7 @@ details .row2{margin-top:12px}
   <p class="sub"><a href="index.html">← 처음으로</a></p>
   <div class="tabs" role="tablist" aria-label="계산기 종류">
     <button role="tab" id="t-leave" aria-controls="p-leave" data-k="leave">연차</button>
+    <button role="tab" id="t-peak" aria-controls="p-peak" data-k="peak">임금피크 주4일 연차</button>
     <button role="tab" id="t-severance" aria-controls="p-severance" data-k="severance">퇴직금</button>
     <button role="tab" id="t-insurance" aria-controls="p-insurance" data-k="insurance">월급 실수령</button>
     <button role="tab" id="t-yearend" aria-controls="p-yearend" data-k="yearend">연말정산 예상</button>
@@ -116,6 +117,7 @@ details .row2{margin-top:12px}
     <button role="tab" id="t-penalty" aria-controls="p-penalty" data-k="penalty">가산세</button>
     <button role="tab" id="t-reverse" aria-controls="p-reverse" data-k="reverse">세후·세전 역산</button>
     <button role="tab" id="t-wh" aria-controls="p-wh" data-k="wh">원천세 정산</button>
+    <button role="tab" id="t-exec" aria-controls="p-exec" data-k="exec">임원 퇴직소득 한도</button>
   </div>
 
   <!-- 연차 -->
@@ -253,6 +255,37 @@ details .row2{margin-top:12px}
     </div>
   </section>
 
+
+  <!-- 임금피크 주4일 연차 -->
+  <section class="panel" id="p-peak" role="tabpanel" aria-labelledby="t-peak" hidden>
+    <div class="form card">
+      <h2>임금피크 주 4일 연차 계산기</h2>
+      <div class="row2">
+        <div class="field"><label for="p-hire">입사일</label><input id="p-hire" type="date"></div>
+        <div class="field"><label for="p-asof">기준일</label><input id="p-asof" type="date"></div>
+      </div>
+      <div class="field"><label for="p-ps">임금피크(근로시간 단축) 시작일</label><input id="p-ps" type="date"><small>비워 두면 단축 없이 계산합니다.</small></div>
+      <h3>단축 후 근무 형태</h3>
+      <div class="row2">
+        <div class="field"><label for="p-dpw">주 근무일 수</label><input id="p-dpw" type="text" inputmode="decimal" value="4"></div>
+        <div class="field"><label for="p-hpd">1일 근로시간</label><input id="p-hpd" type="text" inputmode="decimal" value="8"></div>
+      </div>
+      <div class="field"><label for="p-std">단축 전 주 소정근로시간</label><input id="p-std" type="text" inputmode="decimal" value="40"></div>
+      <h3>연차 사용</h3>
+      <div class="row2">
+        <div class="field"><label for="p-used">이번 연차 기간에 쓴 연차(일)</label><input id="p-used" type="text" inputmode="decimal" value="0"><small>반차는 0.5로 입력</small></div>
+        <div class="field"><label for="p-ded">연차 1일 사용 시 차감 시간</label><input id="p-ded" type="text" inputmode="decimal" value="8"><small>회사 규정 기준. 보통 단축 후 1일 근로시간입니다.</small></div>
+      </div>
+    </div>
+    <div class="out card" aria-live="polite">
+      <p class="label">지금 기준 남은 연차(일 환산)</p>
+      <p class="big" id="p-left">-<small>일</small></p>
+      <p class="err" id="p-err"></p>
+      <dl class="kv" id="p-kv"></dl>
+      <p class="label">임금피크로 소정근로시간이 줄어든 경우의 비례 계산입니다. 고용노동부 해석이 바뀌는 분야라 인사팀·노무사 확인 후 사용하세요. 육아기·임신기 근로시간 단축은 별도 규정이라 이 계산기 대상이 아닙니다. 소정근로시간이 그대로이고 임금만 줄어드는 경우에는 연차가 줄지 않습니다.</p>
+    </div>
+  </section>
+
   <!-- 종합소득세 간이추정 -->
   <section class="panel" id="p-income" role="tabpanel" aria-labelledby="t-income" hidden>
     <div class="form card">
@@ -375,6 +408,35 @@ details .row2{margin-top:12px}
       <p class="label">연말정산 환급액은 2월분 급여를 줄 때 직원에게 먼저 돌려주고, 그 금액을 원천세에서 빼서 신고·납부합니다. 지방소득세(특별징수분)는 따로 정산됩니다.</p>
     </div>
   </section>
+
+  <!-- 임원 퇴직소득 한도초과 -->
+  <section class="panel" id="p-exec" role="tabpanel" aria-labelledby="t-exec" hidden>
+    <div class="form card">
+      <h2>임원 퇴직소득 한도초과 계산기</h2>
+      <p class="hint" style="margin:0">소득세법 제22조 제3항·시행령 제42조의2 기준입니다. 2020년 1월 1일 이후 퇴직한 임원이 대상입니다.</p>
+      <div class="row2">
+        <div class="field"><label for="x-hire">근무 시작일</label><input id="x-hire" type="date"><small>퇴직금 계산 대상 근무기간의 시작일</small></div>
+        <div class="field"><label for="x-end">퇴직일</label><input id="x-end" type="date"></div>
+      </div>
+      <div class="field"><label for="x-total">퇴직소득금액(원)</label><input id="x-total" type="text" inputmode="numeric" placeholder="예: 1,500,000,000"><small>회사가 지급하는 퇴직급여 총액에서 비과세 금액과 공적연금 일시금을 뺀 금액</small></div>
+      <h3>① 2011년 12월 31일까지 근무분</h3>
+      <div class="field"><label for="x-opt">2011.12.31 기준 처리 방식</label><select id="x-opt"><option value="prop">근무기간 비율로 계산(정관·규정 적용 안 함)</option><option value="art">정관·임원퇴직급여지급규정의 금액 적용</option></select></div>
+      <div class="field" id="x-art-f" hidden><label for="x-art">2011.12.31에 퇴직한다고 가정할 때 지급받을 퇴직금(원)</label><input id="x-art" type="text" inputmode="numeric"><small>2011.12.31 당시 정관 또는 위임 규정이 있고, 그 금액을 적용하기로 한 경우만 입력</small></div>
+      <h3>② 2012~2019년 근무분: 총급여</h3>
+      <div class="field"><label for="x-sumA">2019.12.31부터 거슬러 3년 동안 받은 총급여 합계(원)</label><input id="x-sumA" type="text" inputmode="numeric"><small id="x-hintA">근무 시작일과 퇴직일을 넣으면 기간이 표시됩니다.</small></div>
+      <h3>③ 2020년 이후 근무분: 총급여</h3>
+      <div class="field"><label for="x-sumB">퇴직일부터 거슬러 3년 동안 받은 총급여 합계(원)</label><input id="x-sumB" type="text" inputmode="numeric"><small id="x-hintB">근무 시작일과 퇴직일을 넣으면 기간이 표시됩니다.</small></div>
+      <small class="hint">총급여는 비과세를 뺀 근로소득입니다(원천징수영수증 기준). 무보수로 근무한 기간도 기간에 포함하고 급여는 0원으로 계산합니다.</small>
+    </div>
+    <div class="out card" aria-live="polite">
+      <p class="label">한도초과액(근로소득으로 과세)</p>
+      <p class="big" id="x-total-o">-<small>원</small></p>
+      <p class="err" id="x-err"></p>
+      <dl class="kv" id="x-kv"></dl>
+      <p class="label">한도초과액은 퇴직소득이 아니라 근로소득(상여)으로 보아 그해 다른 소득과 합산해 근로소득세를 냅니다. 한도 안의 금액에는 퇴직소득세가 붙습니다. 정관 규정 요건, 총급여에 들어가는 항목(인정상여 등)은 사실관계에 따라 달라지니 확정 전에 세무사 확인이 필요합니다.</p>
+    </div>
+  </section>
+
 </main>
 <footer><div class="wrap">
   <p><b data-cfg="company"></b> <b data-cfg="team"></b> · <span data-cfg="location"></span></p>
@@ -427,6 +489,16 @@ window.HR_CONFIG = {
     noFile: 0.20, underFile: 0.10, fraud: 0.40, // 무신고 20%, 과소신고 10%, 부정행위 40%
     daily: 0.00022                               // 납부지연 1일 10만분의 22
   },
+  // 위탁보육 안내 페이지에 나오는 우리 회사 정보. 비워 두면 "인사팀에 문의하세요"로 표시됩니다.
+  childcare: {
+    type: "",       // 예: 위탁보육 / 직장어린이집 / 보육수당 지급
+    provider: "",   // 예: ○○어린이집(구청 인가)
+    target: "",     // 예: 만 0~5세 자녀
+    share: "",      // 예: 보육료의 50%를 회사가 부담
+    apply: "",      // 예: 인사팀에 신청서 제출
+    deadline: "",   // 예: 매월 20일까지
+    docs: []        // 예: ["재직증명서","가족관계증명서"]
+  },
   rulesAsOf: "2026년 11월"
 };
 
@@ -466,10 +538,10 @@ window.HR_CONFIG = {
   function fm(a,b){var m=(b.getFullYear()-a.getFullYear())*12+b.getMonth()-a.getMonth();if(b.getDate()<a.getDate())m--;return m}
   function kv(id,rows){$(id).innerHTML=rows.map(function(r){return '<dt'+(r[2]?' class="tot"':'')+'>'+r[0]+'</dt><dd>'+r[1]+'</dd>'}).join('')}
   function money(id){var el=$(id);el.addEventListener('blur',function(){var v=parseFloat(el.value.replace(/,/g,''));if(!isNaN(v)&&v>=1000)el.value=Math.round(v).toLocaleString('ko-KR')})}
-  ['l-wage','s-wage3','s-bonus','s-al','s-ord','i-pay','i-non','i-tax','r-min','r-max','y-gross','y-pen','y-hi','y-credit','y-debit','y-med-self','y-med-oth','y-edu-self','y-edu-kid','y-edu-uni','y-ins','y-don','y-rent','y-ps','y-irp','y-paid','t-pay','f-gross','f-base','f-fin','f-ded','f-med','f-edu','f-don','f-ins','f-rent','f-pen','f-cred','c-rev','c-val','c-wage','c-whw','c-pen','n-tax','v-net','v-non','w-a','w-b','w-c','w-d'].forEach(money);
+  ['l-wage','s-wage3','s-bonus','s-al','s-ord','i-pay','i-non','i-tax','r-min','r-max','y-gross','y-pen','y-hi','y-credit','y-debit','y-med-self','y-med-oth','y-edu-self','y-edu-kid','y-edu-uni','y-ins','y-don','y-rent','y-ps','y-irp','y-paid','t-pay','f-gross','f-base','f-fin','f-ded','f-med','f-edu','f-don','f-ins','f-rent','f-pen','f-cred','c-rev','c-val','c-wage','c-whw','c-pen','n-tax','v-net','v-non','w-a','w-b','w-c','w-d','x-total','x-art','x-sumA','x-sumB'].forEach(money);
 
   var today=new Date();
-  $('l-asof').value=iso(today);$('s-end').value=iso(today);$('t-end').value=iso(today);$('n-paid').value=iso(today);
+  $('l-asof').value=iso(today);$('s-end').value=iso(today);$('t-end').value=iso(today);$('n-paid').value=iso(today);$('p-asof').value=iso(today);
 
   function calcLeave(){
     $('l-err').textContent='';
@@ -676,7 +748,89 @@ window.HR_CONFIG = {
     else{$('w-lab').textContent='환급받거나 다음 달로 넘길 세액';$('w-total').innerHTML=won(-r)+'<small>원</small>';$('w-err').textContent='납부할 세액보다 환급액이 큽니다. 환급을 신청하거나 다음 달로 넘길 수 있습니다.'}
     kv('w-kv',[['원천징수한 소득세',won(a)+'원'],['연말정산 추가징수액','+'+won(c)+'원'],['연말정산 환급액','-'+won(b)+'원'],['전월 이월 환급세액','-'+won(d)+'원'],['납부(환급) 세액',won(r)+'원',1]]);
   }
-  var fn={leave:calcLeave,severance:calcSev,insurance:calcIns,yearend:calcYE,retax:calcRet,income:calcInc,refund:calcRef,penalty:calcPen,reverse:calcRev,wh:calcWh};
+
+  function calcPeak(){
+    $('p-err').textContent='';
+    if(!$('p-hire').value||!$('p-asof').value){$('p-left').innerHTML='-<small>일</small>';kv('p-kv',[]);return}
+    var h=pd($('p-hire').value),t=pd($('p-asof').value),dpw=num('p-dpw'),hpd=num('p-hpd'),std=num('p-std')||40,ded=num('p-ded')||8,used=num('p-used');
+    var ps=$('p-ps').value?pd($('p-ps').value):null;
+    if(t<h){$('p-err').textContent='기준일이 입사일보다 빠릅니다.';return}
+    var y=fy(h,t);
+    if(y<1){$('p-left').innerHTML='-<small>일</small>';$('p-err').textContent='입사 1년이 안 되면 월 단위로 연차가 생겨 이 계산기로 다루지 않습니다. 연차 계산기를 이용하세요.';kv('p-kv',[]);return}
+    var wkh=dpw*hpd;
+    if(wkh<15){$('p-err').textContent='주 소정근로시간이 15시간 미만이면 법정 연차 대상이 아닙니다. 입력을 확인하세요.'}
+    var r=Math.min(1,wkh/std);
+    function grant(n){return Math.min(25,15+Math.floor((n-1)/2))}
+    function ratio(a,b){ // a~b 기간 중 임금피크 비율
+      if(!ps)return 0;var s0=ps>a?ps:a;if(s0>=b)return 0;return days(s0,b)/days(a,b)}
+    var A=addY(h,y),N=addY(h,y+1);
+    var rp1=ratio(addY(h,y-1),A),rp2=ratio(A,N);
+    var g1=grant(y),g2=grant(y+1);
+    var hrs1=g1*8*((1-rp1)+rp1*r),hrs2=g2*8*((1-rp2)+rp2*r);
+    var usedH=used*ded,left=hrs1-usedH;
+    $('p-left').innerHTML=(Math.round(left/ded*100)/100)+'<small>일</small>';
+    var rows=[['단축 후 주 소정근로시간',wkh+'시간 (단축 전의 '+Math.round(r*1000)/10+'%)'],
+      ['이번 연차 발생일(근속 '+y+'년)',iso(A)],
+      ['산정 기간 중 임금피크 비율',Math.round(rp1*1000)/10+'%'],
+      ['통상 연차 일수 → 시간',g1+'일 → '+(g1*8)+'시간'],
+      ['이번 발생 연차 시간',(Math.round(hrs1*10)/10)+'시간'],
+      ['일 환산(1일 '+ded+'시간 차감)',(Math.round(hrs1/ded*100)/100)+'일'],
+      ['사용한 연차',used+'일 ('+(Math.round(usedH*10)/10)+'시간)'],
+      ['남은 연차',(Math.round(left*10)/10)+'시간 = '+(Math.round(left/ded*100)/100)+'일',1],
+      ['다음 발생일(근속 '+(y+1)+'년)',iso(N)],
+      ['다음 발생 연차 예상',(Math.round(hrs2*10)/10)+'시간 = '+(Math.round(hrs2/ded*100)/100)+'일']];
+    kv('p-kv',rows);
+    if(!ps)$('p-err').textContent='임금피크 시작일을 넣지 않아 단축 없이 계산했습니다.';
+    else if(ps>t&&!$('p-err').textContent)$('p-err').textContent='임금피크 시작일이 기준일보다 뒤입니다. 다음 발생 연차 예상부터 영향이 있습니다.';
+    if(left<0&&!$('p-err').textContent)$('p-err').textContent='사용한 연차가 발생 시간보다 많습니다. 입력을 확인하세요.';
+  }
+
+  // ---- 임원 퇴직소득 한도초과 (소득세법 제22조 제3항, 시행령 제42조의2)
+  function mc(d,n){var t=new Date(d.getFullYear(),d.getMonth()+n,1),last=new Date(t.getFullYear(),t.getMonth()+1,0).getDate();return new Date(t.getFullYear(),t.getMonth(),Math.min(d.getDate(),last))}
+  function mths(s,e){ // 양 끝 포함, 1개월 미만 끝수는 1개월
+    if(!s||!e||e<s)return 0;var e1=new Date(e.getFullYear(),e.getMonth(),e.getDate()+1);
+    var m=(e1.getFullYear()-s.getFullYear())*12+e1.getMonth()-s.getMonth();if(e1.getDate()<s.getDate())m--;
+    if(mc(s,m)<e1)m++;return m}
+  function mx(a,b){return a>b?a:b}function mn(a,b){return a<b?a:b}
+  function execPeriods(){
+    if(!$('x-hire').value||!$('x-end').value)return null;
+    var S=pd($('x-hire').value),E=pd($('x-end').value);
+    var d11=new Date(2011,11,31),d12=new Date(2012,0,1),d19=new Date(2019,11,31),d20=new Date(2020,0,1);
+    var p1=S<=d11?mths(S,mn(E,d11)):0;
+    var p2=(S<=d19&&E>=d12)?mths(mx(S,d12),mn(E,d19)):0;
+    var p3=E>=d20?mths(mx(S,d20),E):0;
+    var aS=mx(S,new Date(2017,0,1)),aE=d19;
+    var mA=(S<=d19&&E>=d12)?mths(aS,aE):0;
+    var bS=mx(S,new Date(E.getFullYear()-3,E.getMonth(),E.getDate()+1)),mB=mths(bS,E);
+    return {S:S,E:E,all:mths(S,E),p1:p1,p2:p2,p3:p3,aS:aS,aE:aE,mA:mA,bS:bS,mB:mB};
+  }
+  function calcExec(){
+    $('x-err').textContent='';$('x-art-f').hidden=$('x-opt').value!=='art';
+    var P=execPeriods();
+    if(P){
+      $('x-hintA').textContent=P.mA?'해당 기간: '+iso(P.aS)+' ~ '+iso(P.aE)+' ('+P.mA+'개월). 근무기간이 3년보다 짧으면 그 기간만 넣습니다.':'2019년 12월 31일 이전에 근무하지 않아 입력하지 않아도 됩니다.';
+      $('x-hintB').textContent='해당 기간: '+iso(P.bS)+' ~ '+iso(P.E)+' ('+P.mB+'개월). 근무기간이 3년보다 짧으면 그 기간만 넣습니다.';
+    }
+    var total=num('x-total');
+    if(!P||!total){$('x-total-o').innerHTML='-<small>원</small>';kv('x-kv',[]);return}
+    if(P.E<new Date(2020,0,1)){$('x-total-o').innerHTML='-<small>원</small>';kv('x-kv',[]);$('x-err').textContent='이 계산기는 2020년 1월 1일 이후 퇴직자용입니다. 그 전 퇴직자는 당시 배수(3배)를 적용해야 합니다.';return}
+    if(P.E<P.S){$('x-err').textContent='퇴직일이 근무 시작일보다 빠릅니다.';return}
+    var sumA=num('x-sumA'),sumB=num('x-sumB');
+    if(P.p3>0&&!sumB){$('x-total-o').innerHTML='-<small>원</small>';kv('x-kv',[]);$('x-err').textContent='③ 퇴직일부터 3년 동안의 총급여 합계를 넣어 주세요. 무보수였다면 0을 넣으세요.';if(!$('x-sumB').value)return}
+    var A=P.mA?sumA/P.mA*12:0,B=P.mB?sumB/P.mB*12:0;
+    var t1=0;
+    if(P.p1>0){t1=$('x-opt').value==='art'?num('x-art'):total*P.p1/P.all}
+    var t2=A*0.1*P.p2/12*3,t3=B*0.1*P.p3/12*2,limit=t1+t2+t3,ex=Math.max(0,total-limit);
+    $('x-total-o').innerHTML=won(ex)+'<small>원</small>';
+    var rows=[['전체 근무기간',P.all+'개월'],['2011.12.31까지 근무',P.p1+'개월'],['2012.1.1~2019.12.31 근무',P.p2+'개월 (3배)'],['2020.1.1 이후 근무',P.p3+'개월 (2배)'],
+      ['② 총급여 연평균환산액',P.mA?won(A)+'원':'해당 없음'],['③ 총급여 연평균환산액',won(B)+'원'],
+      ['① 2011.12.31까지분',won(t1)+'원'],['② 2012~2019년분',won(t2)+'원'],['③ 2020년 이후분',won(t3)+'원'],['한도액(①+②+③)',won(limit)+'원',1],
+      ['지급하는 퇴직소득금액',won(total)+'원'],['한도초과액(근로소득)',won(ex)+'원',1],['퇴직소득으로 보는 금액',won(total-ex)+'원']];
+    kv('x-kv',rows);
+    if(ex===0)$('x-err').textContent='한도를 넘지 않아 전액 퇴직소득으로 봅니다.';
+  }
+
+  var fn={exec:calcExec,peak:calcPeak,leave:calcLeave,severance:calcSev,insurance:calcIns,yearend:calcYE,retax:calcRet,income:calcInc,refund:calcRef,penalty:calcPen,reverse:calcRev,wh:calcWh};
   Object.keys(fn).forEach(function(k){var p=$('p-'+k);p.addEventListener('input',fn[k]);p.addEventListener('change',fn[k])});
   function show(k){
     if(!fn[k])k='leave';

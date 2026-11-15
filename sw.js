@@ -1,6 +1,6 @@
 /* 오프라인에서도 열리도록 파일을 저장해 둡니다. 파일을 고쳤다면 VERSION 숫자를 올리세요. */
-const VERSION = 'hr-portal-v3';
-const FILES = ['./', 'index.html', 'diagnosis.html', 'calculators.html', 'calendar.html', 'config.js', 'manifest.json', 'icon.svg'];
+const VERSION = 'hr-portal-v4';
+const FILES = ['./', 'index.html', 'diagnosis.html', 'calculators.html', 'calendar.html', 'laws.html', 'childcare.html', 'config.js', 'manifest.json', 'icon.svg'];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(VERSION).then(c => c.addAll(FILES)).then(() => self.skipWaiting()));
 });
