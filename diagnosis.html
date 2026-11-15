@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#0E5A52">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<title>상황별 안내</title>
+<style>
+:root{--bg:#F3F6F4;--surface:#fff;--ink:#12211D;--muted:#566863;--line:#D5DEDA;--primary:#0E5A52;--on-primary:#fff;--mark:#FFD24A;--soft:#E6EFEB;--warn-bg:#FFF3CC;--warn-ink:#5B4300;--shadow:0 1px 2px rgba(14,40,34,.06),0 6px 20px -8px rgba(14,40,34,.14)}
+:root[data-theme=dark]{--bg:#0F1A17;--surface:#16251F;--ink:#E8F0EC;--muted:#98ABA4;--line:#2A3D36;--primary:#5FD0BF;--on-primary:#06231E;--soft:#1D3029;--warn-bg:#3A3010;--warn-ink:#FFE9A6;--shadow:none}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0F1A17;--surface:#16251F;--ink:#E8F0EC;--muted:#98ABA4;--line:#2A3D36;--primary:#5FD0BF;--on-primary:#06231E;--soft:#1D3029;--warn-bg:#3A3010;--warn-ink:#FFE9A6;--shadow:none}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard Variable",Pretendard,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;font-size:16px;line-height:1.65;word-break:keep-all;overflow-wrap:break-word}
+a{color:inherit}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--primary);outline-offset:2px;border-radius:6px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:8px;top:-60px;background:var(--primary);color:var(--on-primary);padding:8px 14px;border-radius:8px;z-index:50}
+.skip:focus{top:8px}
+.wrap{max-width:960px;margin:0 auto;padding:0 20px}
+.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:60px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;min-width:0}
+.brand svg{flex:none}
+.brand span{display:flex;flex-direction:column;line-height:1.25;min-width:0}
+.brand b{font-size:16px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand i{font-style:normal;font-size:12.5px;color:var(--muted)}
+.acts{display:flex;gap:6px;flex:none}
+.pill{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 14px;font-size:14px;cursor:pointer;min-height:38px}
+.pill:hover{border-color:var(--primary)}
+.sub{padding:18px 0 0;font-size:14.5px}
+.sub a{color:var(--muted);text-decoration:none;display:inline-flex;align-items:center;min-height:36px}
+.sub a:hover{color:var(--primary);text-decoration:underline}
+h1{font-size:clamp(28px,6.2vw,42px);line-height:1.25;letter-spacing:-.02em;margin:0 0 10px;font-weight:800}
+h2{font-size:20px;margin:0 0 14px;letter-spacing:-.01em}
+h3{font-size:15px;margin:0 0 8px;color:var(--muted);font-weight:600}
+.lead{color:var(--muted);margin:0;max-width:34em}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:46px;padding:0 20px;border-radius:12px;border:1px solid var(--primary);background:var(--primary);color:var(--on-primary);font-weight:700;text-decoration:none;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--primary)}
+.note{background:var(--warn-bg);color:var(--warn-ink);border-radius:12px;padding:14px 16px;font-size:15px}
+.note b{display:block;margin-bottom:2px}
+footer{margin-top:56px;border-top:1px solid var(--line);padding:28px 0 48px;color:var(--muted);font-size:13.5px}
+footer b{color:var(--ink)}
+footer p{margin:0 0 6px}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+
+#stage{padding:20px 0 0;outline:0}
+#stage:focus{outline:0}
+.recap{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 18px;padding:0;list-style:none}
+.recap li{background:var(--soft);border-radius:999px;padding:4px 12px;font-size:13.5px;color:var(--muted)}
+.q{font-size:clamp(24px,5.6vw,34px);line-height:1.3;letter-spacing:-.02em;margin:0 0 20px;font-weight:800}
+.opts{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.opt{width:100%;text-align:left;display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:17px 20px;font-size:17.5px;font-weight:600;cursor:pointer;min-height:58px}
+.opt:hover{border-color:var(--c,var(--primary));background:var(--soft)}
+.opt em{font-style:normal;color:var(--muted);font-size:22px}
+.back{margin-top:18px}
+.pick{--c:#2F8F6B}
+.res{border-left:8px solid var(--c,var(--primary));border-radius:16px;padding:24px 22px 26px;display:grid;gap:22px}
+.res h2{font-size:clamp(22px,5vw,30px);line-height:1.35;letter-spacing:-.02em;margin:0}
+.res .leadp{margin:0;font-size:17px}
+.cols{display:grid;gap:22px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.cols h3{color:var(--ink);font-size:16px;margin-bottom:10px}
+.res ol,.res ul.plain{margin:0;padding-left:22px}
+.res li+li{margin-top:8px}
+.res ol li::marker{font-weight:700;color:var(--primary)}
+.links2{display:flex;flex-wrap:wrap;gap:8px}
+.links2 a{border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-size:14.5px;text-decoration:none;background:var(--bg)}
+.links2 a:hover{border-color:var(--primary)}
+.actions{display:flex;flex-wrap:wrap;gap:10px}
+</style>
+</head>
+<body data-title="상황별 안내">
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="top"><div class="wrap bar">
+  <a class="brand" href="index.html" aria-label="처음으로">
+    <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><rect width="34" height="34" rx="9" fill="var(--primary)"/><path d="M9 12.5A3.5 3.5 0 0 1 12.5 9h9a3.5 3.5 0 0 1 3.5 3.5v5a3.5 3.5 0 0 1-3.5 3.5H17l-4 3.5V21h-.5A3.5 3.5 0 0 1 9 17.5z" fill="var(--on-primary)"/><circle cx="25.5" cy="9" r="4" fill="#FFD24A"/></svg>
+    <span><b data-cfg="company"></b><i>직원 포털 · <span data-cfg="team" style="display:inline"></span></i></span>
+  </a>
+  <nav class="acts" aria-label="도구">
+    <button class="pill" id="installBtn" type="button">앱 설치</button>
+    <button class="pill" id="themeBtn" type="button" aria-label="화면 밝기 바꾸기">어둡게</button>
+  </nav>
+</div></header>
+
+<main id="main" class="wrap">
+  <p class="sub"><a href="index.html">← 처음으로</a></p>
+  <div id="stage" tabindex="-1" aria-live="polite"></div>
+</main>
+<footer><div class="wrap">
+  <p><b data-cfg="company"></b> <b data-cfg="team"></b> · <span data-cfg="location"></span></p>
+  <p><a data-tel href="#"><span data-cfg="phone"></span></a> <span data-cfg="phoneExt"></span> · <a data-mail href="#"></a> · <span data-cfg="hours"></span></p>
+  <p>이 포털의 안내와 계산 결과는 참고용입니다. 법정 기준은 <span data-cfg="rulesAsOf"></span> 기준이며, 사내 규정이 법정 기준보다 유리하면 사내 규정을 따릅니다. 정확한 처리는 인사팀 확인 후 확정됩니다.</p>
+</div></footer>
+
+<script>
+/* 이 파일만 고치면 모든 페이지에 반영됩니다. */
+window.HR_CONFIG = {
+  company: "○○주식회사",
+  team: "인사팀",
+  phone: "02-0000-0000",
+  phoneExt: "내선 100",
+  email: "hr@example.com",
+  hours: "평일 09:00–18:00 (점심 12:00–13:00)",
+  location: "본사 ○층 인사팀",
+  // 사내 시스템 링크: url을 실제 주소로 바꾸세요
+  internalLinks: [
+    { name: "근태·휴가 시스템", desc: "연차 신청, 잔여 연차 확인", url: "#" },
+    { name: "급여명세서", desc: "월별 급여명세서 조회", url: "#" },
+    { name: "증명서 발급", desc: "재직·경력증명서 신청", url: "#" },
+    { name: "복지 포털", desc: "복지 포인트, 건강검진", url: "#" }
+  ],
+  // 공공기관 링크는 필요하면 추가·삭제하세요
+  publicLinks: [
+    { name: "고용24", desc: "육아휴직·실업급여 신청", url: "https://www.work24.go.kr/" },
+    { name: "4대사회보험 정보연계센터", desc: "가입 내역 조회", url: "https://www.4insure.or.kr/" },
+    { name: "국민연금", desc: "연금 가입 내역·예상 연금", url: "https://www.nps.or.kr/" },
+    { name: "국민건강보험", desc: "보험료 조회·피부양자", url: "https://www.nhis.or.kr/" },
+    { name: "홈택스", desc: "연말정산 간소화·소득금액증명", url: "https://www.hometax.go.kr/" },
+    { name: "국가법령정보센터", desc: "근로기준법 등 원문", url: "https://www.law.go.kr/" }
+  ],
+  // 4대보험 요율(근로자 부담, %): 매년 1월·7월 확인 후 고치세요
+  rates: { pension: 4.75, health: 3.595, ltc: 13.14, employment: 0.9, pensionMin: 400000, pensionMax: 6370000 },
+  rulesAsOf: "2026년 11월"
+};
+
+</script>
+<script src="config.js"></script>
+<script>
+(function(){
+  var C=window.HR_CONFIG||{};
+  var root=document.documentElement;
+  try{var t=localStorage.getItem('hr-theme');if(t)root.setAttribute('data-theme',t)}catch(e){}
+  document.querySelectorAll('[data-cfg]').forEach(function(el){var v=C[el.getAttribute('data-cfg')];if(v!=null)el.textContent=v});
+  document.querySelectorAll('[data-tel]').forEach(function(el){el.href='tel:'+String(C.phone||'').replace(/[^0-9+]/g,'')});
+  document.querySelectorAll('[data-mail]').forEach(function(el){el.href='mailto:'+(C.email||'');if(!el.textContent.trim())el.textContent=C.email});
+  var pg=document.body.getAttribute('data-title')||'';
+  document.title=(pg?pg+' · ':'')+(C.company||'')+' '+(C.team||'');
+  var tb=document.getElementById('themeBtn');
+  function isDark(){var a=root.getAttribute('data-theme');return a?a==='dark':matchMedia('(prefers-color-scheme: dark)').matches}
+  function label(){if(tb)tb.textContent=isDark()?'밝게':'어둡게'}
+  label();
+  if(tb)tb.addEventListener('click',function(){var n=isDark()?'light':'dark';root.setAttribute('data-theme',n);try{localStorage.setItem('hr-theme',n)}catch(e){}label()});
+  if('serviceWorker' in navigator&&location.protocol.indexOf('http')===0){navigator.serviceWorker.register('sw.js').catch(function(){})}
+  window.HR_STORE={get:function(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set:function(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+})();
+
+</script>
+<script>
+(function(){
+var C=window.HR_CONFIG;
+var COLOR={leave:'#2F8F6B',family:'#C4577F',resign:'#5B6FD6',proof:'#C28A1E',pay:'#2C8FAE'};
+var L={work24:{t:'고용24',u:'https://www.work24.go.kr/'},law:{t:'국가법령정보센터',u:'https://www.law.go.kr/'},hometax:{t:'홈택스',u:'https://www.hometax.go.kr/'},ins4:{t:'4대사회보험 정보연계센터',u:'https://www.4insure.or.kr/'},nps:{t:'국민연금',u:'https://www.nps.or.kr/'},nhis:{t:'국민건강보험',u:'https://www.nhis.or.kr/'}};
+var S={
+leave:{t:'휴가·연차',start:'k',
+ nodes:{
+  k:{q:'어떤 휴가를 쓰려고 하나요?',o:[['연차로 하루 이상 쉬기','y'],['반차·반반차','r_half'],['결혼·상(喪) 등 경조사','r_event'],['몸이 아파서 쉬기(병가)','r_sick']]},
+  y:{q:'입사한 지 1년이 지났나요?',o:[['1년 이상 근무했습니다','r_y1'],['아직 1년이 안 됐습니다','r_y0']]}
+ },
+ res:{
+  r_y1:{t:'연차는 15일부터 시작해 근속에 따라 늘어납니다',lead:'1년 이상 근무하고 직전 1년 출근율이 80% 이상이면 연차 15일이 생깁니다. 3년 이상 근속하면 2년마다 1일씩 더해져 최대 25일까지 늘어납니다.',
+   steps:['휴가 시스템에서 잔여 연차를 확인합니다','쓰려는 날짜를 정해 결재선에 미리 신청합니다','승인되면 일정을 공유하고 업무를 인수인계합니다'],
+   note:['회계연도 기준으로 연차를 주는 회사는 발생 시점이 다릅니다.','연차 사용 촉진 제도를 운영하면 안 쓴 연차의 수당 정산 여부가 달라질 수 있습니다. 사내 규정을 확인하세요.'],calc:['leave','연차 계산기로 내 연차 확인']},
+  r_y0:{t:'첫해에는 한 달 개근할 때마다 1일씩 생깁니다',lead:'입사 1년이 되기 전에는 1개월 개근마다 연차 1일이 생기고 최대 11일입니다. 1년이 되면 연차 15일이 새로 생깁니다.',
+   steps:['휴가 시스템에서 지금까지 생긴 연차를 확인합니다','쓰려는 날짜를 정해 결재선에 미리 신청합니다'],
+   note:['한 달을 다 채워야 1일이 생기므로 입사 첫 달에는 연차가 없을 수 있습니다.'],calc:['leave','연차 계산기로 내 연차 확인']},
+  r_half:{t:'반차·반반차는 사내 규정으로 운영합니다',lead:'반차는 법으로 정해진 제도가 아니라 취업규칙이나 사내 규정으로 정합니다. 보통 반차는 연차 0.5일, 반반차는 0.25일이 차감됩니다.',
+   steps:['휴가 시스템에서 휴가 종류(오전/오후 반차)를 고릅니다','사전에 신청하고 승인을 받습니다'],note:['반반차 허용 여부와 월 사용 횟수 제한은 회사마다 다릅니다.']},
+  r_event:{t:'경조휴가는 사내 규정에 정해진 일수를 씁니다',lead:'결혼, 가족상 등 경조휴가는 법정 의무가 아니라 취업규칙이나 단체협약으로 정합니다. 일수와 가족 범위는 사내 경조 규정표를 따릅니다.',
+   steps:['사내 경조 규정에서 일수와 대상 가족을 확인합니다','휴가 시스템에서 경조휴가로 신청합니다','다녀온 뒤 증빙을 제출합니다'],docs:['청첩장 또는 부고','가족관계증명서(필요한 경우)'],note:['경조금 지급 여부와 금액도 같은 규정표에서 확인하세요.']},
+  r_sick:{t:'병가는 사내 규정과 진단서 기준을 먼저 확인하세요',lead:'병가의 유급 여부와 일수는 사내 규정에 따릅니다. 업무 중 다친 경우에는 산재 처리 대상일 수 있으니 바로 인사팀에 알려 주세요.',
+   steps:['팀장에게 먼저 알리고 병가를 신청합니다','진단서나 소견서를 제출합니다','복귀 일정을 팀과 인사팀에 공유합니다'],docs:['진단서 또는 소견서','진료확인서'],note:['업무와 관련된 사고·질병이면 병가가 아니라 산재 신청을 먼저 상의하세요.']}
+ }},
+family:{t:'출산·육아',start:'k',
+ nodes:{
+  k:{q:'어떤 상황인가요?',o:[['본인이 임신했거나 출산합니다','r_mat'],['배우자가 출산합니다','r_sp'],['자녀를 키우려고 쉬거나 근무시간을 줄이고 싶습니다','c']]},
+  c:{q:'자녀가 만 8세 이하(초등학교 2학년 이하)인가요?',o:[['네, 해당합니다','c2'],['아니요, 더 큽니다','r_cno']]},
+  c2:{q:'어떻게 하고 싶으세요?',o:[['완전히 쉬고 싶습니다','r_leave'],['근무시간만 줄이고 싶습니다','r_reduce']]}
+ },
+ res:{
+  r_mat:{t:'출산전후휴가는 90일입니다',lead:'출산 전후로 연속 90일(쌍둥이 이상은 120일)을 쓸 수 있습니다. 출산 후에 45일(쌍둥이 이상은 60일) 이상 남도록 나눕니다. 임신 중에는 근로시간 단축도 신청할 수 있습니다.',
+   steps:['출산 예정일을 확인하고 인사팀과 휴가 시작일을 상의합니다','휴가 신청서와 임신 확인 서류를 제출합니다','고용보험 출산전후휴가 급여 신청 방법을 안내받습니다'],docs:['임신확인서(출산예정일 기재)','휴가 신청서'],
+   note:['급여 지원은 고용보험 요건에 따라 달라집니다. 고용24에서 확인하세요.'],links:['work24']},
+  r_sp:{t:'배우자 출산휴가는 유급 20일입니다',lead:'배우자가 출산하면 유급 휴가 20일을 쓸 수 있습니다. 출산일부터 120일 이내에 청구해야 하며 최대 3회까지 나눠 쓸 수 있습니다.',
+   steps:['쓰려는 시기를 정해 휴가를 신청합니다','출산 사실을 확인할 서류를 제출합니다','나눠 쓸 경우 남은 일수와 기한을 확인합니다'],docs:['출생증명서 또는 가족관계증명서'],note:['증빙 서류의 종류와 제출 방식은 사내 절차를 확인하세요.']},
+  r_leave:{t:'육아휴직은 최대 1년, 시작 30일 전에 신청합니다',lead:'만 8세 이하(초등 2학년 이하) 자녀를 키우는 근로자는 최대 1년 육아휴직을 쓸 수 있고, 고용보험에서 육아휴직 급여를 받을 수 있습니다.',
+   steps:['휴직 시작 30일 전까지 인사팀에 신청서를 냅니다','업무 인수인계 계획을 팀장과 정합니다','고용보험 급여는 고용24에서 신청합니다(사업주 확인 절차 포함)'],docs:['육아휴직 신청서','가족관계증명서 또는 주민등록등본'],
+   note:['급여 금액과 상한은 고용보험 기준이 바뀔 수 있으니 고용24에서 확인하세요.','부부가 함께 쓰는 경우의 급여 특례도 고용24 안내를 확인하세요.'],links:['work24']},
+  r_reduce:{t:'육아기 근로시간 단축은 주 15~35시간으로 줄입니다',lead:'같은 대상 자녀를 키우는 근로자는 주 15시간 이상 35시간 이하로 근로시간을 줄일 수 있습니다. 기간은 최대 1년이고, 육아휴직을 쓰지 않은 기간만큼 더해 최대 2년까지 쓸 수 있습니다.',
+   steps:['시작 30일 전까지 인사팀에 신청합니다','줄일 근무시간과 요일을 팀장과 정합니다','고용보험 지원금 대상인지 고용24에서 확인합니다'],docs:['근로시간 단축 신청서','가족관계증명서 또는 주민등록등본'],note:['줄어든 시간만큼 급여는 비례해서 줄어듭니다.'],links:['work24']},
+  r_cno:{t:'법정 육아휴직 대상은 아닙니다',lead:'자녀가 만 8세를 넘으면 법정 육아휴직·근로시간 단축 대상이 아닙니다. 대신 사내 제도나 가족돌봄 휴가를 쓸 수 있는지 확인해 보세요.',
+   steps:['인사팀에 사내 자녀돌봄 제도가 있는지 묻습니다','가족돌봄 휴가(연 최대 10일) 대상인지 확인합니다'],note:['가족돌봄 휴가 대상 가족과 사용 조건은 사내 규정과 법령을 함께 확인하세요.']}
+ }},
+resign:{t:'퇴사',start:'k',
+ nodes:{
+  k:{q:'퇴사일이 정해졌나요?',o:[['정해졌습니다','t'],['아직 고민 중입니다','r_think']]},
+  t:{q:'이 회사에서 1년 이상 근무했나요?',o:[['1년 이상 근무했습니다','r_1y'],['1년 미만입니다','r_0y']]}
+ },
+ res:{
+  r_think:{t:'결정 전에 숫자부터 확인해 보세요',lead:'퇴사를 확정하기 전에 남은 연차, 예상 퇴직금, 4대보험 변동을 미리 계산해 볼 수 있습니다. 퇴사 일정은 팀장·인사팀과 상의해서 정합니다.',
+   steps:['남은 연차 일수를 확인합니다','예상 퇴직금을 계산합니다','사내 규정의 퇴직 통보 기한을 확인합니다'],calc:['severance','퇴직금 계산기로 예상액 확인']},
+  r_1y:{t:'1년 이상 근무했다면 퇴직금을 받을 수 있습니다',lead:'계속 근로 1년 이상이고 주 15시간 이상 일했다면 퇴직금 대상입니다. 퇴직금은 퇴직일로부터 14일 이내 지급이 원칙입니다.',
+   steps:['사내 규정의 통보 기한을 확인하고 사직서를 제출합니다','남은 연차를 쓸지, 수당으로 정산할지 정합니다','인수인계를 하고 장비·출입증을 반납합니다','필요한 서류(경력증명서 등)를 요청합니다'],docs:['사직서','경력증명서(필요한 경우)'],
+   note:['4대보험은 퇴사 다음 날 자격이 상실됩니다. 건강보험은 지역가입자로 바뀌거나 가족의 피부양자로 등록할 수 있습니다.','스스로 퇴사하면 실업급여는 원칙적으로 받기 어렵고, 정당한 사유가 있는 경우에만 예외가 있습니다. 고용센터에서 확인하세요.'],calc:['severance','퇴직금 계산기로 예상액 확인'],links:['work24','nhis']},
+  r_0y:{t:'1년 미만이면 법정 퇴직금은 없습니다',lead:'계속 근로 1년 미만이면 법정 퇴직금은 없습니다. 마지막 달 급여와 남은 연차 정산은 받을 수 있습니다.',
+   steps:['사내 규정의 통보 기한을 확인하고 사직서를 제출합니다','마지막 급여의 일할 계산과 연차 정산을 확인합니다','인수인계를 하고 장비·출입증을 반납합니다'],docs:['사직서'],links:['work24']}
+ }},
+proof:{t:'증명서',start:'k',
+ nodes:{k:{q:'어떤 서류가 필요하신가요?',o:[['재직증명서·경력증명서','r_cert'],['원천징수영수증·소득 증빙','r_income'],['4대보험 가입·자격 확인서','r_ins']]}},
+ res:{
+  r_cert:{t:'재직·경력증명서는 인사팀에서 발급합니다',lead:'재직증명서와 경력증명서는 인사팀에서 발급합니다. 퇴사한 뒤에도 퇴직 후 3년 이내에는 사용 증명서(근로기준법 제39조)를 청구할 수 있습니다.',
+   steps:['증명서 발급 시스템이나 인사팀에 요청합니다','용도와 제출처를 적습니다','발급본을 받아 제출처 요구 형식에 맞는지 확인합니다'],note:['발급에 걸리는 시간과 직인 필요 여부는 사내 기준을 따릅니다.']},
+  r_income:{t:'원천징수영수증은 회사, 소득금액증명은 홈택스',lead:'근로소득 원천징수영수증은 인사팀에서 받을 수 있고, 소득금액증명원은 홈택스에서 직접 발급받을 수 있습니다.',
+   steps:['제출처가 요구하는 서류 이름을 확인합니다','원천징수영수증이면 인사팀에 요청합니다','소득금액증명원이면 홈택스에서 직접 발급합니다'],links:['hometax']},
+  r_ins:{t:'가입 내역은 직접 조회할 수 있습니다',lead:'4대보험 가입 내역은 4대사회보험 정보연계센터에서 직접 확인할 수 있습니다. 회사 명의의 확인서가 필요하면 인사팀에 요청하세요.',
+   steps:['공공기관 사이트에서 가입 내역을 조회합니다','회사 명의 확인서가 필요하면 인사팀에 요청합니다'],links:['ins4','nps','nhis']}
+ }},
+pay:{t:'급여·공제',start:'k',
+ nodes:{k:{q:'무엇이 궁금하세요?',o:[['월급에서 4대보험이 얼마 빠지는지','r_ins'],['퇴직금이 얼마나 되는지','r_sev'],['연말정산은 어떻게 하는지','r_ye'],['급여명세서 금액이 이상합니다','r_slip']]}},
+ res:{
+  r_ins:{t:'월 보수로 4대보험 공제액을 계산해 보세요',lead:'월 보수를 넣으면 4대보험 근로자 부담분을 계산해 줍니다. 소득세와 지방소득세는 간이세액표로 따로 계산되므로 포함하지 않습니다.',calc:['insurance','4대보험 공제 계산기 열기']},
+  r_sev:{t:'평균임금으로 예상 퇴직금을 계산해 보세요',lead:'입사일, 퇴사일, 최근 3개월 임금을 넣으면 예상 퇴직금을 계산해 줍니다. 퇴직소득세는 포함하지 않습니다.',calc:['severance','퇴직금 계산기 열기']},
+  r_ye:{t:'연말정산은 매년 초 홈택스 자료로 진행합니다',lead:'홈택스 연말정산 간소화 서비스에서 공제 자료를 내려받아 회사에 제출합니다. 일정과 제출 방법은 인사팀 공지를 따릅니다.',
+   steps:['인사팀 연말정산 공지에서 일정을 확인합니다','홈택스에서 간소화 자료를 조회합니다','부양가족 공제 서류 등 추가 자료를 준비합니다','회사 시스템에 입력하고 제출합니다'],note:['부양가족 소득 요건 등 공제 기준은 매년 달라질 수 있으니 공지의 최신 기준을 확인하세요.'],links:['hometax']},
+  r_slip:{t:'급여명세서가 이상할 때 확인하는 순서',lead:'금액이 예상과 다르면 항목별로 나눠서 보면 원인을 빨리 찾을 수 있습니다.',
+   steps:['총지급액과 공제 항목을 나눠서 봅니다','전월 명세서와 비교해 달라진 항목을 찾습니다(수당, 결근, 연차 정산 등)','4대보험은 요율이 바뀌는 1월·7월 전후와 건강보험 정산이 있는 4월에 변동이 있는지 확인합니다','그래도 이상하면 해당 월과 항목을 적어서 급여 담당자에게 문의합니다'],calc:['insurance','4대보험 공제 계산기로 비교']}
+ }}
+};
+var $stage=document.getElementById('stage');
+var sc=null,id=null,node=null,trail=[];
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')}
+function focusStage(){$stage.focus({preventScroll:true});window.scrollTo({top:0})}
+function pick(){
+  sc=null;
+  document.title='상황별 안내 · '+C.company+' '+C.team;
+  $stage.innerHTML='<h1 class="q">어떤 상황인가요?</h1><ul class="opts">'+Object.keys(S).map(function(k){return '<li><button class="opt" data-s="'+k+'" style="--c:'+COLOR[k]+'" type="button">'+esc(S[k].t)+'<em aria-hidden="true">›</em></button></li>'}).join('')+'</ul>';
+}
+function recap(){return trail.length?'<ul class="recap" aria-label="내가 고른 답">'+trail.map(function(t){return '<li>'+esc(t.a)+'</li>'}).join('')+'</ul>':''}
+function render(){
+  if(!sc){pick();return}
+  var n=sc.nodes[node];
+  document.documentElement.style.setProperty('--c',COLOR[id]);
+  if(n){
+    $stage.innerHTML=recap()+'<h1 class="q">'+esc(n.q)+'</h1><ul class="opts">'+n.o.map(function(o,i){return '<li><button class="opt" data-i="'+i+'" type="button">'+esc(o[0])+'<em aria-hidden="true">›</em></button></li>'}).join('')+'</ul><p class="back"><button class="pill" data-act="back" type="button">← 이전 질문</button></p>';
+    document.title=sc.t+' · '+C.company+' '+C.team;
+  }else{
+    var r=sc.res[node];
+    var h='<div class="res card" style="--c:'+COLOR[id]+'"><h2 id="resT">'+esc(r.t)+'</h2><p class="leadp">'+esc(r.lead)+'</p>';
+    if(r.steps||r.docs){h+='<div class="cols">';
+      if(r.steps)h+='<div><h3>진행 순서</h3><ol>'+r.steps.map(function(s){return '<li>'+esc(s)+'</li>'}).join('')+'</ol></div>';
+      if(r.docs)h+='<div><h3>준비할 서류</h3><ul class="plain">'+r.docs.map(function(s){return '<li>'+esc(s)+'</li>'}).join('')+'</ul></div>';
+      h+='</div>'}
+    if(r.note)h+='<div class="note"><b>확인할 점</b>'+r.note.map(function(s){return esc(s)}).join('<br>')+'</div>';
+    if(r.links)h+='<div class="links2">'+r.links.map(function(k){return '<a href="'+L[k].u+'" target="_blank" rel="noopener">'+L[k].t+'</a>'}).join('')+'</div>';
+    var subj='[인사팀 문의] '+sc.t+' - '+r.t;
+    var body='안녕하세요. 포털에서 아래와 같이 선택했습니다.\n'+trail.map(function(t){return '- '+t.q+' → '+t.a}).join('\n')+'\n\n문의 내용: ';
+    h+='<div class="actions">'+(r.calc?'<a class="btn" href="calculators.html#'+r.calc[0]+'">'+esc(r.calc[1])+'</a>':'')+'<a class="btn'+(r.calc?' ghost':'')+'" href="mailto:'+C.email+'?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent(body)+'">인사팀에 문의하기</a><button class="btn ghost" data-act="restart" type="button">처음부터 다시</button></div></div>';
+    $stage.innerHTML=recap()+h;
+    document.title=r.t+' · '+C.company+' '+C.team;
+  }
+  focusStage();
+}
+function go(key){id=key;sc=S[key];node=sc.start;trail=[];history.replaceState(null,'','?s='+key);render()}
+$stage.addEventListener('click',function(e){
+  var b=e.target.closest('button');if(!b)return;
+  if(b.dataset.s){go(b.dataset.s);return}
+  if(b.dataset.i!=null){var n=sc.nodes[node],o=n.o[+b.dataset.i];trail.push({q:n.q,a:o[0],prev:node});node=o[1];render();return}
+  if(b.dataset.act==='back'){var t=trail.pop();if(t){node=t.prev}render();return}
+  if(b.dataset.act==='restart'){sc=null;id=null;history.replaceState(null,'',location.pathname);pick();focusStage()}
+});
+var q=new URLSearchParams(location.search).get('s');
+if(q&&S[q]){id=q;sc=S[q];node=sc.start;trail=[];render()}else{pick()}
+})();
+</script>
+</body>
+</html>

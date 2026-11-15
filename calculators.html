@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#0E5A52">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<title>계산기</title>
+<style>
+:root{--bg:#F3F6F4;--surface:#fff;--ink:#12211D;--muted:#566863;--line:#D5DEDA;--primary:#0E5A52;--on-primary:#fff;--mark:#FFD24A;--soft:#E6EFEB;--warn-bg:#FFF3CC;--warn-ink:#5B4300;--shadow:0 1px 2px rgba(14,40,34,.06),0 6px 20px -8px rgba(14,40,34,.14)}
+:root[data-theme=dark]{--bg:#0F1A17;--surface:#16251F;--ink:#E8F0EC;--muted:#98ABA4;--line:#2A3D36;--primary:#5FD0BF;--on-primary:#06231E;--soft:#1D3029;--warn-bg:#3A3010;--warn-ink:#FFE9A6;--shadow:none}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0F1A17;--surface:#16251F;--ink:#E8F0EC;--muted:#98ABA4;--line:#2A3D36;--primary:#5FD0BF;--on-primary:#06231E;--soft:#1D3029;--warn-bg:#3A3010;--warn-ink:#FFE9A6;--shadow:none}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard Variable",Pretendard,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;font-size:16px;line-height:1.65;word-break:keep-all;overflow-wrap:break-word}
+a{color:inherit}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--primary);outline-offset:2px;border-radius:6px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:8px;top:-60px;background:var(--primary);color:var(--on-primary);padding:8px 14px;border-radius:8px;z-index:50}
+.skip:focus{top:8px}
+.wrap{max-width:960px;margin:0 auto;padding:0 20px}
+.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:60px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;min-width:0}
+.brand svg{flex:none}
+.brand span{display:flex;flex-direction:column;line-height:1.25;min-width:0}
+.brand b{font-size:16px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand i{font-style:normal;font-size:12.5px;color:var(--muted)}
+.acts{display:flex;gap:6px;flex:none}
+.pill{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 14px;font-size:14px;cursor:pointer;min-height:38px}
+.pill:hover{border-color:var(--primary)}
+.sub{padding:18px 0 0;font-size:14.5px}
+.sub a{color:var(--muted);text-decoration:none;display:inline-flex;align-items:center;min-height:36px}
+.sub a:hover{color:var(--primary);text-decoration:underline}
+h1{font-size:clamp(28px,6.2vw,42px);line-height:1.25;letter-spacing:-.02em;margin:0 0 10px;font-weight:800}
+h2{font-size:20px;margin:0 0 14px;letter-spacing:-.01em}
+h3{font-size:15px;margin:0 0 8px;color:var(--muted);font-weight:600}
+.lead{color:var(--muted);margin:0;max-width:34em}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:46px;padding:0 20px;border-radius:12px;border:1px solid var(--primary);background:var(--primary);color:var(--on-primary);font-weight:700;text-decoration:none;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--primary)}
+.note{background:var(--warn-bg);color:var(--warn-ink);border-radius:12px;padding:14px 16px;font-size:15px}
+.note b{display:block;margin-bottom:2px}
+footer{margin-top:56px;border-top:1px solid var(--line);padding:28px 0 48px;color:var(--muted);font-size:13.5px}
+footer b{color:var(--ink)}
+footer p{margin:0 0 6px}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+
+.tabs{display:flex;gap:6px;margin:18px 0 20px;overflow-x:auto;padding-bottom:2px}
+.tabs button{flex:none;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:9px 18px;font-weight:600;cursor:pointer;min-height:42px}
+.tabs button[aria-selected=true]{background:var(--primary);color:var(--on-primary);border-color:var(--primary)}
+.panel{display:grid;gap:18px;grid-template-columns:1fr}
+@media(min-width:800px){.panel{grid-template-columns:minmax(0,5fr) minmax(0,6fr);align-items:start}}
+.form{padding:20px;display:grid;gap:14px}
+.form h2{margin:0}
+.field label{display:block;font-weight:600;font-size:14.5px;margin-bottom:4px}
+.field small{display:block;color:var(--muted);font-size:13px;margin-top:3px}
+.field input,.field select{width:100%;min-height:46px;border:1px solid var(--line);border-radius:10px;background:var(--bg);padding:0 12px;font-size:16px}
+.field input:focus,.field select:focus{border-color:var(--primary);outline:3px solid color-mix(in srgb,var(--primary) 25%,transparent);outline-offset:0}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.out{padding:22px;display:grid;gap:14px;position:sticky;top:76px}
+.big{font-size:clamp(34px,8vw,46px);font-weight:800;letter-spacing:-.03em;line-height:1.15;margin:0}
+.big small{font-size:.4em;font-weight:600;margin-left:4px;color:var(--muted)}
+.label{color:var(--muted);font-size:14px;margin:0}
+.kv{margin:0;display:grid;grid-template-columns:1fr auto;gap:8px 12px;font-size:15.5px;border-top:1px solid var(--line);padding-top:12px}
+.kv dt{color:var(--muted)}
+.kv dd{margin:0;text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
+.kv .tot{font-size:17px}
+.kv .tot,.kv .tot+dd{border-top:1px solid var(--line);padding-top:8px;color:var(--ink)}
+details{border:1px solid var(--line);border-radius:10px;padding:10px 14px}
+summary{cursor:pointer;font-weight:600;font-size:14.5px}
+details .row2{margin-top:12px}
+.err{color:#B3261E;font-size:14.5px;margin:0}
+:root[data-theme=dark] .err{color:#FF9C94}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]) .err{color:#FF9C94}}
+</style>
+</head>
+<body data-title="계산기">
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="top"><div class="wrap bar">
+  <a class="brand" href="index.html" aria-label="처음으로">
+    <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><rect width="34" height="34" rx="9" fill="var(--primary)"/><path d="M9 12.5A3.5 3.5 0 0 1 12.5 9h9a3.5 3.5 0 0 1 3.5 3.5v5a3.5 3.5 0 0 1-3.5 3.5H17l-4 3.5V21h-.5A3.5 3.5 0 0 1 9 17.5z" fill="var(--on-primary)"/><circle cx="25.5" cy="9" r="4" fill="#FFD24A"/></svg>
+    <span><b data-cfg="company"></b><i>직원 포털 · <span data-cfg="team" style="display:inline"></span></i></span>
+  </a>
+  <nav class="acts" aria-label="도구">
+    <button class="pill" id="installBtn" type="button">앱 설치</button>
+    <button class="pill" id="themeBtn" type="button" aria-label="화면 밝기 바꾸기">어둡게</button>
+  </nav>
+</div></header>
+
+<main id="main" class="wrap">
+  <p class="sub"><a href="index.html">← 처음으로</a></p>
+  <div class="tabs" role="tablist" aria-label="계산기 종류">
+    <button role="tab" id="t-leave" aria-controls="p-leave" data-k="leave">연차</button>
+    <button role="tab" id="t-severance" aria-controls="p-severance" data-k="severance">퇴직금</button>
+    <button role="tab" id="t-insurance" aria-controls="p-insurance" data-k="insurance">4대보험 공제</button>
+  </div>
+
+  <!-- 연차 -->
+  <section class="panel" id="p-leave" role="tabpanel" aria-labelledby="t-leave" hidden>
+    <div class="form card">
+      <h2>연차 계산기</h2>
+      <div class="row2">
+        <div class="field"><label for="l-hire">입사일</label><input id="l-hire" type="date"></div>
+        <div class="field"><label for="l-asof">기준일</label><input id="l-asof" type="date"></div>
+      </div>
+      <div class="field"><label for="l-used">이미 쓴 연차(일)</label><input id="l-used" type="text" inputmode="decimal" value="0"><small>반차는 0.5로 입력하세요.</small></div>
+      <div class="field"><label for="l-wage">하루 통상임금(원, 선택)</label><input id="l-wage" type="text" inputmode="numeric" placeholder="예: 100,000"><small>넣으면 남은 연차의 수당 환산액을 보여 줍니다.</small></div>
+    </div>
+    <div class="out card" aria-live="polite">
+      <p class="label">지금 기준 남은 연차</p>
+      <p class="big" id="l-left">-<small>일</small></p>
+      <p class="err" id="l-err"></p>
+      <dl class="kv" id="l-kv"></dl>
+      <p class="label">입사일 기준으로 계산했습니다. 출근율 80% 이상, 개근을 가정합니다. 회계연도 기준으로 연차를 주는 회사는 결과가 다를 수 있습니다.</p>
+    </div>
+  </section>
+
+  <!-- 퇴직금 -->
+  <section class="panel" id="p-severance" role="tabpanel" aria-labelledby="t-severance" hidden>
+    <div class="form card">
+      <h2>퇴직금 계산기</h2>
+      <div class="row2">
+        <div class="field"><label for="s-hire">입사일</label><input id="s-hire" type="date"></div>
+        <div class="field"><label for="s-end">퇴사일(마지막 근무일)</label><input id="s-end" type="date"></div>
+      </div>
+      <div class="field"><label for="s-wage3">퇴사 전 3개월 임금 총액(원)</label><input id="s-wage3" type="text" inputmode="numeric" placeholder="예: 12,000,000"><small>세전 금액입니다. 기본급과 고정 수당, 연장·야간 수당을 모두 더하세요.</small></div>
+      <div class="field"><label for="s-bonus">최근 1년 상여금 총액(원)</label><input id="s-bonus" type="text" inputmode="numeric" value="0"></div>
+      <div class="field"><label for="s-al">최근 1년 연차수당 총액(원)</label><input id="s-al" type="text" inputmode="numeric" value="0"></div>
+      <div class="field"><label for="s-ord">하루 통상임금(원, 선택)</label><input id="s-ord" type="text" inputmode="numeric"><small>평균임금보다 통상임금이 높으면 통상임금으로 계산합니다.</small></div>
+      <div class="field"><label for="s-hours">주 소정근로시간</label><select id="s-hours"><option value="y">주 15시간 이상</option><option value="n">주 15시간 미만</option></select></div>
+    </div>
+    <div class="out card" aria-live="polite">
+      <p class="label">예상 퇴직금(세전)</p>
+      <p class="big" id="s-total">-<small>원</small></p>
+      <p class="err" id="s-err"></p>
+      <dl class="kv" id="s-kv"></dl>
+      <p class="label">퇴직소득세는 빠지지 않은 금액입니다. 실제 지급액은 인사팀 계산으로 확정됩니다.</p>
+    </div>
+  </section>
+
+  <!-- 4대보험 -->
+  <section class="panel" id="p-insurance" role="tabpanel" aria-labelledby="t-insurance" hidden>
+    <div class="form card">
+      <h2>4대보험 공제 계산기</h2>
+      <div class="field"><label for="i-pay">월 보수(원, 세전)</label><input id="i-pay" type="text" inputmode="numeric" placeholder="예: 3,500,000"></div>
+      <div class="field"><label for="i-non">비과세 금액(원)</label><input id="i-non" type="text" inputmode="numeric" value="0"><small>식대 등 비과세 항목은 보험료 계산에서 제외됩니다.</small></div>
+      <details><summary>적용 요율 보기·고치기</summary>
+        <div class="row2">
+          <div class="field"><label for="r-p">국민연금(%)</label><input id="r-p" type="text" inputmode="decimal"></div>
+          <div class="field"><label for="r-h">건강보험(%)</label><input id="r-h" type="text" inputmode="decimal"></div>
+          <div class="field"><label for="r-l">장기요양(건강보험료 대비 %)</label><input id="r-l" type="text" inputmode="decimal"></div>
+          <div class="field"><label for="r-e">고용보험(%)</label><input id="r-e" type="text" inputmode="decimal"></div>
+          <div class="field"><label for="r-min">연금 기준소득 하한(원)</label><input id="r-min" type="text" inputmode="numeric"></div>
+          <div class="field"><label for="r-max">연금 기준소득 상한(원)</label><input id="r-max" type="text" inputmode="numeric"></div>
+        </div>
+      </details>
+    </div>
+    <div class="out card" aria-live="polite">
+      <p class="label">4대보험 근로자 부담 합계(월)</p>
+      <p class="big" id="i-total">-<small>원</small></p>
+      <dl class="kv" id="i-kv"></dl>
+      <p class="label">소득세·지방소득세는 포함하지 않았습니다. 원 단위 절사 방식에 따라 급여명세서와 몇 원 차이가 날 수 있습니다. 요율은 매년 1월·7월에 바뀔 수 있습니다.</p>
+    </div>
+  </section>
+</main>
+<footer><div class="wrap">
+  <p><b data-cfg="company"></b> <b data-cfg="team"></b> · <span data-cfg="location"></span></p>
+  <p><a data-tel href="#"><span data-cfg="phone"></span></a> <span data-cfg="phoneExt"></span> · <a data-mail href="#"></a> · <span data-cfg="hours"></span></p>
+  <p>이 포털의 안내와 계산 결과는 참고용입니다. 법정 기준은 <span data-cfg="rulesAsOf"></span> 기준이며, 사내 규정이 법정 기준보다 유리하면 사내 규정을 따릅니다. 정확한 처리는 인사팀 확인 후 확정됩니다.</p>
+</div></footer>
+
+<script>
+/* 이 파일만 고치면 모든 페이지에 반영됩니다. */
+window.HR_CONFIG = {
+  company: "○○주식회사",
+  team: "인사팀",
+  phone: "02-0000-0000",
+  phoneExt: "내선 100",
+  email: "hr@example.com",
+  hours: "평일 09:00–18:00 (점심 12:00–13:00)",
+  location: "본사 ○층 인사팀",
+  // 사내 시스템 링크: url을 실제 주소로 바꾸세요
+  internalLinks: [
+    { name: "근태·휴가 시스템", desc: "연차 신청, 잔여 연차 확인", url: "#" },
+    { name: "급여명세서", desc: "월별 급여명세서 조회", url: "#" },
+    { name: "증명서 발급", desc: "재직·경력증명서 신청", url: "#" },
+    { name: "복지 포털", desc: "복지 포인트, 건강검진", url: "#" }
+  ],
+  // 공공기관 링크는 필요하면 추가·삭제하세요
+  publicLinks: [
+    { name: "고용24", desc: "육아휴직·실업급여 신청", url: "https://www.work24.go.kr/" },
+    { name: "4대사회보험 정보연계센터", desc: "가입 내역 조회", url: "https://www.4insure.or.kr/" },
+    { name: "국민연금", desc: "연금 가입 내역·예상 연금", url: "https://www.nps.or.kr/" },
+    { name: "국민건강보험", desc: "보험료 조회·피부양자", url: "https://www.nhis.or.kr/" },
+    { name: "홈택스", desc: "연말정산 간소화·소득금액증명", url: "https://www.hometax.go.kr/" },
+    { name: "국가법령정보센터", desc: "근로기준법 등 원문", url: "https://www.law.go.kr/" }
+  ],
+  // 4대보험 요율(근로자 부담, %): 매년 1월·7월 확인 후 고치세요
+  rates: { pension: 4.75, health: 3.595, ltc: 13.14, employment: 0.9, pensionMin: 400000, pensionMax: 6370000 },
+  rulesAsOf: "2026년 11월"
+};
+
+</script>
+<script src="config.js"></script>
+<script>
+(function(){
+  var C=window.HR_CONFIG||{};
+  var root=document.documentElement;
+  try{var t=localStorage.getItem('hr-theme');if(t)root.setAttribute('data-theme',t)}catch(e){}
+  document.querySelectorAll('[data-cfg]').forEach(function(el){var v=C[el.getAttribute('data-cfg')];if(v!=null)el.textContent=v});
+  document.querySelectorAll('[data-tel]').forEach(function(el){el.href='tel:'+String(C.phone||'').replace(/[^0-9+]/g,'')});
+  document.querySelectorAll('[data-mail]').forEach(function(el){el.href='mailto:'+(C.email||'');if(!el.textContent.trim())el.textContent=C.email});
+  var pg=document.body.getAttribute('data-title')||'';
+  document.title=(pg?pg+' · ':'')+(C.company||'')+' '+(C.team||'');
+  var tb=document.getElementById('themeBtn');
+  function isDark(){var a=root.getAttribute('data-theme');return a?a==='dark':matchMedia('(prefers-color-scheme: dark)').matches}
+  function label(){if(tb)tb.textContent=isDark()?'밝게':'어둡게'}
+  label();
+  if(tb)tb.addEventListener('click',function(){var n=isDark()?'light':'dark';root.setAttribute('data-theme',n);try{localStorage.setItem('hr-theme',n)}catch(e){}label()});
+  if('serviceWorker' in navigator&&location.protocol.indexOf('http')===0){navigator.serviceWorker.register('sw.js').catch(function(){})}
+  window.HR_STORE={get:function(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set:function(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+})();
+
+</script>
+<script>
+(function(){
+  var C=window.HR_CONFIG,$=function(i){return document.getElementById(i)};
+  var won=function(n){return Math.round(n).toLocaleString('ko-KR')};
+  var num=function(id){var v=parseFloat(String($(id).value).replace(/,/g,''));return isNaN(v)?0:v};
+  var fl10=function(n){return Math.floor(n/10)*10};
+  function pd(s){var a=s.split('-').map(Number);return new Date(a[0],a[1]-1,a[2])}
+  function iso(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+  function addY(d,n){return new Date(d.getFullYear()+n,d.getMonth(),d.getDate())}
+  function days(a,b){return Math.round((b-a)/864e5)}
+  function fy(a,b){var y=b.getFullYear()-a.getFullYear();if(addY(a,y)>b)y--;return y}
+  function fm(a,b){var m=(b.getFullYear()-a.getFullYear())*12+b.getMonth()-a.getMonth();if(b.getDate()<a.getDate())m--;return m}
+  function kv(id,rows){$(id).innerHTML=rows.map(function(r){return '<dt'+(r[2]?' class="tot"':'')+'>'+r[0]+'</dt><dd>'+r[1]+'</dd>'}).join('')}
+  function money(id){var el=$(id);el.addEventListener('blur',function(){var v=parseFloat(el.value.replace(/,/g,''));if(!isNaN(v)&&v>=1000)el.value=Math.round(v).toLocaleString('ko-KR')})}
+  ['l-wage','s-wage3','s-bonus','s-al','s-ord','i-pay','i-non','r-min','r-max'].forEach(money);
+
+  var today=new Date();
+  $('l-asof').value=iso(today);$('s-end').value=iso(today);
+
+  function calcLeave(){
+    $('l-err').textContent='';
+    if(!$('l-hire').value||!$('l-asof').value){$('l-left').innerHTML='-<small>일</small>';kv('l-kv',[]);return}
+    var h=pd($('l-hire').value),t=pd($('l-asof').value);
+    if(t<h){$('l-err').textContent='기준일이 입사일보다 빠릅니다.';return}
+    var y=fy(h,t),m=fm(h,t),granted,next;
+    if(y<1){granted=Math.min(m,11);next=['1년이 되는 날('+iso(addY(h,1))+')','연차 15일 발생']}
+    else{granted=Math.min(25,15+Math.floor((y-1)/2));var nd=Math.min(25,15+Math.floor(y/2));next=[iso(addY(h,y+1))+' (근속 '+(y+1)+'년)','연차 '+nd+'일 발생']}
+    var used=num('l-used'),left=granted-used,wage=num('l-wage');
+    $('l-left').innerHTML=(Math.round(left*100)/100)+'<small>일</small>';
+    var ten=y<1?m+'개월':y+'년 '+(fm(addY(h,y),t))+'개월';
+    var rows=[['근속 기간',ten],[y<1?'지금까지 생긴 연차':'이번 기간 발생 연차',granted+'일'],['사용한 연차',used+'일'],['남은 연차',(Math.round(left*100)/100)+'일',1],['다음 발생',next[0]+'<br>'+next[1]]];
+    if(wage>0&&left>0)rows.splice(4,0,['남은 연차 수당 환산',won(left*wage)+'원']);
+    kv('l-kv',rows);
+    if(left<0)$('l-err').textContent='사용한 연차가 발생 연차보다 많습니다. 입력을 확인하세요.';
+  }
+  function calcSev(){
+    $('s-err').textContent='';
+    if(!$('s-hire').value||!$('s-end').value||!num('s-wage3')){$('s-total').innerHTML='-<small>원</small>';kv('s-kv',[]);return}
+    var h=pd($('s-hire').value),e=pd($('s-end').value);
+    if(e<h){$('s-err').textContent='퇴사일이 입사일보다 빠릅니다.';return}
+    var tenure=days(h,e)+1;
+    var endNext=new Date(e.getFullYear(),e.getMonth(),e.getDate()+1);
+    var start3=new Date(endNext.getFullYear(),endNext.getMonth()-3,endNext.getDate());
+    var d3=days(start3,endNext);
+    var base3=num('s-wage3')+num('s-bonus')*3/12+num('s-al')*3/12;
+    var avg=base3/d3,ord=num('s-ord'),daily=avg,usedOrd=false;
+    if(ord>avg){daily=ord;usedOrd=true}
+    var rows=[['재직일수',won(tenure)+'일'],['퇴사 전 3개월 일수',d3+'일'],['3개월 임금+상여·연차 가산',won(base3)+'원'],['1일 '+(usedOrd?'통상임금(더 높아 적용)':'평균임금'),won(daily)+'원']];
+    if($('s-hours').value==='n'){$('s-total').innerHTML='0<small>원</small>';$('s-err').textContent='주 15시간 미만 근로자는 법정 퇴직금 대상이 아닙니다.';kv('s-kv',rows);return}
+    if(tenure<365){$('s-total').innerHTML='0<small>원</small>';$('s-err').textContent='계속 근로 기간이 1년 미만이라 법정 퇴직금 대상이 아닙니다.';kv('s-kv',rows);return}
+    var total=daily*30*tenure/365;
+    $('s-total').innerHTML=won(total)+'<small>원</small>';
+    rows.push(['계산식','1일 임금 × 30일 × 재직일수 ÷ 365']);
+    kv('s-kv',rows);
+  }
+  function calcIns(){
+    var pay=num('i-pay');
+    if(!pay){$('i-total').innerHTML='-<small>원</small>';kv('i-kv',[]);return}
+    var base=Math.max(0,pay-num('i-non'));
+    var rp=num('r-p')/100,rh=num('r-h')/100,rl=num('r-l')/100,re=num('r-e')/100;
+    var pb=Math.min(Math.max(base,num('r-min')),num('r-max'));pb=Math.round(pb/1000)*1000;
+    var np=fl10(pb*rp),hi=fl10(base*rh),lt=fl10(hi*rl),ei=fl10(base*re);
+    var tot=np+hi+lt+ei;
+    $('i-total').innerHTML=won(tot)+'<small>원</small>';
+    kv('i-kv',[['보험료 계산 기준액',won(base)+'원'],['국민연금',won(np)+'원'],['건강보험',won(hi)+'원'],['장기요양보험',won(lt)+'원'],['고용보험',won(ei)+'원'],['공제 합계',won(tot)+'원',1],['세전 월급에서 뺀 금액(소득세 제외)',won(pay-tot)+'원']]);
+  }
+  var R=C.rates||{};
+  $('r-p').value=R.pension;$('r-h').value=R.health;$('r-l').value=R.ltc;$('r-e').value=R.employment;
+  $('r-min').value=(R.pensionMin||0).toLocaleString('ko-KR');$('r-max').value=(R.pensionMax||0).toLocaleString('ko-KR');
+
+  var fn={leave:calcLeave,severance:calcSev,insurance:calcIns};
+  Object.keys(fn).forEach(function(k){var p=$('p-'+k);p.addEventListener('input',fn[k]);p.addEventListener('change',fn[k])});
+  function show(k){
+    if(!fn[k])k='leave';
+    ['leave','severance','insurance'].forEach(function(x){$('p-'+x).hidden=x!==k;$('t-'+x).setAttribute('aria-selected',x===k)});
+    document.title=$('t-'+k).textContent+' 계산기 · '+C.company+' '+C.team;
+    fn[k]();
+  }
+  document.querySelector('.tabs').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;history.replaceState(null,'','#'+b.dataset.k);show(b.dataset.k)});
+  window.addEventListener('hashchange',function(){show(location.hash.slice(1))});
+  show(location.hash.slice(1));
+})();
+</script>
+</body>
+</html>

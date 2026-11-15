@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#0E5A52">
+<meta name="description" content="휴가, 출산·육아, 퇴사, 증명서, 급여 — 직원이 자주 묻는 인사 문의를 상황별로 안내합니다.">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<title>인사팀 직원 포털</title>
+<style>
+:root{--bg:#F3F6F4;--surface:#fff;--ink:#12211D;--muted:#566863;--line:#D5DEDA;--primary:#0E5A52;--on-primary:#fff;--mark:#FFD24A;--soft:#E6EFEB;--warn-bg:#FFF3CC;--warn-ink:#5B4300;--shadow:0 1px 2px rgba(14,40,34,.06),0 6px 20px -8px rgba(14,40,34,.14)}
+:root[data-theme=dark]{--bg:#0F1A17;--surface:#16251F;--ink:#E8F0EC;--muted:#98ABA4;--line:#2A3D36;--primary:#5FD0BF;--on-primary:#06231E;--soft:#1D3029;--warn-bg:#3A3010;--warn-ink:#FFE9A6;--shadow:none}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0F1A17;--surface:#16251F;--ink:#E8F0EC;--muted:#98ABA4;--line:#2A3D36;--primary:#5FD0BF;--on-primary:#06231E;--soft:#1D3029;--warn-bg:#3A3010;--warn-ink:#FFE9A6;--shadow:none}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard Variable",Pretendard,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;font-size:16px;line-height:1.65;word-break:keep-all;overflow-wrap:break-word}
+a{color:inherit}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--primary);outline-offset:2px;border-radius:6px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:8px;top:-60px;background:var(--primary);color:var(--on-primary);padding:8px 14px;border-radius:8px;z-index:50}
+.skip:focus{top:8px}
+.wrap{max-width:960px;margin:0 auto;padding:0 20px}
+.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:60px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;min-width:0}
+.brand svg{flex:none}
+.brand span{display:flex;flex-direction:column;line-height:1.25;min-width:0}
+.brand b{font-size:16px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand i{font-style:normal;font-size:12.5px;color:var(--muted)}
+.acts{display:flex;gap:6px;flex:none}
+.pill{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 14px;font-size:14px;cursor:pointer;min-height:38px}
+.pill:hover{border-color:var(--primary)}
+.sub{padding:18px 0 0;font-size:14.5px}
+.sub a{color:var(--muted);text-decoration:none;display:inline-flex;align-items:center;min-height:36px}
+.sub a:hover{color:var(--primary);text-decoration:underline}
+h1{font-size:clamp(28px,6.2vw,42px);line-height:1.25;letter-spacing:-.02em;margin:0 0 10px;font-weight:800}
+h2{font-size:20px;margin:0 0 14px;letter-spacing:-.01em}
+h3{font-size:15px;margin:0 0 8px;color:var(--muted);font-weight:600}
+.lead{color:var(--muted);margin:0;max-width:34em}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:46px;padding:0 20px;border-radius:12px;border:1px solid var(--primary);background:var(--primary);color:var(--on-primary);font-weight:700;text-decoration:none;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--primary)}
+.note{background:var(--warn-bg);color:var(--warn-ink);border-radius:12px;padding:14px 16px;font-size:15px}
+.note b{display:block;margin-bottom:2px}
+footer{margin-top:56px;border-top:1px solid var(--line);padding:28px 0 48px;color:var(--muted);font-size:13.5px}
+footer b{color:var(--ink)}
+footer p{margin:0 0 6px}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+
+.hero{padding:36px 0 22px}
+.search{position:relative;display:block;margin-top:22px;max-width:520px}
+.search input{width:100%;min-height:50px;border-radius:14px;border:1px solid var(--line);background:var(--surface);padding:0 48px 0 16px;font-size:16px}
+.search input:focus{border-color:var(--primary);outline:3px solid color-mix(in srgb,var(--primary) 25%,transparent);outline-offset:0}
+.search kbd{position:absolute;right:14px;top:50%;transform:translateY(-50%);border:1px solid var(--line);border-radius:6px;padding:0 7px;font:600 13px/22px inherit;color:var(--muted);background:var(--bg)}
+@media(hover:none){.search kbd{display:none}}
+.sits{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.sit a{--c:#2F8F6B;display:grid;grid-template-columns:8px 1fr auto;align-items:center;gap:16px;padding:18px 20px 18px 0;background:var(--surface);border:1px solid var(--line);border-radius:14px;text-decoration:none;overflow:hidden;transition:border-color .15s,transform .15s}
+.sit a::before{content:"";align-self:stretch;background:var(--c)}
+.sit a:hover{border-color:var(--c)}
+.sit a:hover{background:var(--soft)}
+.sit b{display:block;font-size:clamp(18px,4.4vw,22px);line-height:1.35;letter-spacing:-.01em}
+.sit span{display:block;color:var(--muted);font-size:14.5px;margin-top:2px}
+.sit em{font-style:normal;font-size:22px;color:var(--muted)}
+.sec{margin-top:44px}
+.tools{list-style:none;margin:0;padding:0;display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.tool{display:flex;align-items:stretch;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.tool.fav{border-color:var(--primary);box-shadow:inset 0 0 0 1px var(--primary)}
+.tool a{flex:1;padding:16px 4px 16px 18px;text-decoration:none;min-width:0}
+.tool a:hover b{text-decoration:underline}
+.tool b{display:block;font-size:17px}
+.tool span{display:block;color:var(--muted);font-size:14px}
+.star{flex:none;width:52px;border:0;background:transparent;font-size:22px;cursor:pointer;color:var(--muted)}
+.star[aria-pressed=true]{color:#D99A00}
+.linkcols{display:grid;gap:26px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.links{list-style:none;margin:0;padding:0;border:1px solid var(--line);border-radius:14px;background:var(--surface);overflow:hidden}
+.links li+li{border-top:1px solid var(--line)}
+.links a{display:flex;justify-content:space-between;gap:12px;align-items:baseline;padding:13px 18px;text-decoration:none}
+.links a:hover{background:var(--soft)}
+.links b{font-size:15.5px}
+.links span{color:var(--muted);font-size:13.5px;text-align:right}
+.contact{margin-top:44px;padding:22px;display:grid;gap:14px}
+.contact h2{margin:0}
+.contact dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px 16px;font-size:15.5px}
+.contact dt{color:var(--muted)}
+.contact dd{margin:0}
+.empty{display:none;padding:22px;text-align:center;color:var(--muted)}
+dialog{border:1px solid var(--line);border-radius:18px;background:var(--surface);color:var(--ink);max-width:440px;width:calc(100% - 32px);padding:24px}
+dialog::backdrop{background:rgba(0,0,0,.45)}
+dialog h2{margin-top:0}
+dialog p{margin:0 0 10px}
+dialog ul{padding-left:20px;margin:0 0 18px}
+</style>
+</head>
+<body data-title="">
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="top"><div class="wrap bar">
+  <a class="brand" href="index.html" aria-label="처음으로">
+    <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><rect width="34" height="34" rx="9" fill="var(--primary)"/><path d="M9 12.5A3.5 3.5 0 0 1 12.5 9h9a3.5 3.5 0 0 1 3.5 3.5v5a3.5 3.5 0 0 1-3.5 3.5H17l-4 3.5V21h-.5A3.5 3.5 0 0 1 9 17.5z" fill="var(--on-primary)"/><circle cx="25.5" cy="9" r="4" fill="#FFD24A"/></svg>
+    <span><b data-cfg="company"></b><i>직원 포털 · <span data-cfg="team" style="display:inline"></span></i></span>
+  </a>
+  <nav class="acts" aria-label="도구">
+    <button class="pill" id="installBtn" type="button">앱 설치</button>
+    <button class="pill" id="themeBtn" type="button" aria-label="화면 밝기 바꾸기">어둡게</button>
+  </nav>
+</div></header>
+
+<main id="main" class="wrap">
+  <section class="hero" aria-labelledby="h1">
+    <h1 id="h1">무슨 일이 있으신가요?</h1>
+    <p class="lead">상황을 고르면 질문 몇 개로 절차와 준비할 서류를 안내합니다.</p>
+    <label class="search"><span class="sr">상황이나 도구 검색</span>
+      <input id="q" type="search" placeholder="예: 연차, 퇴직금, 육아휴직" autocomplete="off" enterkeyhint="search">
+      <kbd aria-hidden="true">/</kbd></label>
+  </section>
+
+  <section id="sitSec" aria-label="상황별 안내"><ul class="sits" id="sits"></ul></section>
+
+  <section id="toolSec" class="sec" aria-labelledby="toolH">
+    <h2 id="toolH">바로 계산해 보기</h2>
+    <ul class="tools" id="tools"></ul>
+  </section>
+
+  <section id="linkSec" class="sec" aria-labelledby="linkH">
+    <h2 id="linkH">자주 가는 사이트</h2>
+    <div class="linkcols">
+      <div><h3>사내 시스템</h3><ul class="links" id="inLinks"></ul></div>
+      <div><h3>공공기관</h3><ul class="links" id="pubLinks"></ul></div>
+    </div>
+  </section>
+
+  <p class="empty card" id="empty" role="status">찾는 항목이 없습니다. 아래 연락처로 인사팀에 직접 물어보세요.</p>
+
+  <section class="contact card" aria-labelledby="ctH">
+    <h2 id="ctH">답을 못 찾았다면 인사팀에 문의하세요</h2>
+    <dl>
+      <dt>전화</dt><dd><a data-tel href="#"><span data-cfg="phone"></span></a> <span data-cfg="phoneExt"></span></dd>
+      <dt>이메일</dt><dd><a data-mail href="#"></a></dd>
+      <dt>운영 시간</dt><dd data-cfg="hours"></dd>
+      <dt>위치</dt><dd data-cfg="location"></dd>
+    </dl>
+  </section>
+</main>
+<footer><div class="wrap">
+  <p><b data-cfg="company"></b> <b data-cfg="team"></b> · <span data-cfg="location"></span></p>
+  <p><a data-tel href="#"><span data-cfg="phone"></span></a> <span data-cfg="phoneExt"></span> · <a data-mail href="#"></a> · <span data-cfg="hours"></span></p>
+  <p>이 포털의 안내와 계산 결과는 참고용입니다. 법정 기준은 <span data-cfg="rulesAsOf"></span> 기준이며, 사내 규정이 법정 기준보다 유리하면 사내 규정을 따릅니다. 정확한 처리는 인사팀 확인 후 확정됩니다.</p>
+</div></footer>
+
+
+<dialog id="installDlg" aria-labelledby="idH">
+  <h2 id="idH">홈 화면에 추가하기</h2>
+  <p>앱처럼 바로 열 수 있습니다.</p>
+  <ul>
+    <li><b>안드로이드(크롬)</b>: 오른쪽 위 ⋮ → 홈 화면에 추가</li>
+    <li><b>아이폰(사파리)</b>: 공유 버튼 → 홈 화면에 추가</li>
+    <li><b>PC(크롬·엣지)</b>: 주소창 오른쪽 설치 아이콘</li>
+  </ul>
+  <button class="btn" id="dlgClose" type="button">닫기</button>
+</dialog>
+
+<script>
+/* 이 파일만 고치면 모든 페이지에 반영됩니다. */
+window.HR_CONFIG = {
+  company: "○○주식회사",
+  team: "인사팀",
+  phone: "02-0000-0000",
+  phoneExt: "내선 100",
+  email: "hr@example.com",
+  hours: "평일 09:00–18:00 (점심 12:00–13:00)",
+  location: "본사 ○층 인사팀",
+  // 사내 시스템 링크: url을 실제 주소로 바꾸세요
+  internalLinks: [
+    { name: "근태·휴가 시스템", desc: "연차 신청, 잔여 연차 확인", url: "#" },
+    { name: "급여명세서", desc: "월별 급여명세서 조회", url: "#" },
+    { name: "증명서 발급", desc: "재직·경력증명서 신청", url: "#" },
+    { name: "복지 포털", desc: "복지 포인트, 건강검진", url: "#" }
+  ],
+  // 공공기관 링크는 필요하면 추가·삭제하세요
+  publicLinks: [
+    { name: "고용24", desc: "육아휴직·실업급여 신청", url: "https://www.work24.go.kr/" },
+    { name: "4대사회보험 정보연계센터", desc: "가입 내역 조회", url: "https://www.4insure.or.kr/" },
+    { name: "국민연금", desc: "연금 가입 내역·예상 연금", url: "https://www.nps.or.kr/" },
+    { name: "국민건강보험", desc: "보험료 조회·피부양자", url: "https://www.nhis.or.kr/" },
+    { name: "홈택스", desc: "연말정산 간소화·소득금액증명", url: "https://www.hometax.go.kr/" },
+    { name: "국가법령정보센터", desc: "근로기준법 등 원문", url: "https://www.law.go.kr/" }
+  ],
+  // 4대보험 요율(근로자 부담, %): 매년 1월·7월 확인 후 고치세요
+  rates: { pension: 4.75, health: 3.595, ltc: 13.14, employment: 0.9, pensionMin: 400000, pensionMax: 6370000 },
+  rulesAsOf: "2026년 11월"
+};
+
+</script>
+<script src="config.js"></script>
+<script>
+(function(){
+  var C=window.HR_CONFIG||{};
+  var root=document.documentElement;
+  try{var t=localStorage.getItem('hr-theme');if(t)root.setAttribute('data-theme',t)}catch(e){}
+  document.querySelectorAll('[data-cfg]').forEach(function(el){var v=C[el.getAttribute('data-cfg')];if(v!=null)el.textContent=v});
+  document.querySelectorAll('[data-tel]').forEach(function(el){el.href='tel:'+String(C.phone||'').replace(/[^0-9+]/g,'')});
+  document.querySelectorAll('[data-mail]').forEach(function(el){el.href='mailto:'+(C.email||'');if(!el.textContent.trim())el.textContent=C.email});
+  var pg=document.body.getAttribute('data-title')||'';
+  document.title=(pg?pg+' · ':'')+(C.company||'')+' '+(C.team||'');
+  var tb=document.getElementById('themeBtn');
+  function isDark(){var a=root.getAttribute('data-theme');return a?a==='dark':matchMedia('(prefers-color-scheme: dark)').matches}
+  function label(){if(tb)tb.textContent=isDark()?'밝게':'어둡게'}
+  label();
+  if(tb)tb.addEventListener('click',function(){var n=isDark()?'light':'dark';root.setAttribute('data-theme',n);try{localStorage.setItem('hr-theme',n)}catch(e){}label()});
+  if('serviceWorker' in navigator&&location.protocol.indexOf('http')===0){navigator.serviceWorker.register('sw.js').catch(function(){})}
+  window.HR_STORE={get:function(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set:function(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+})();
+
+</script>
+<script>
+(function(){
+  var C=window.HR_CONFIG, S=window.HR_STORE;
+  var SITS=[
+    {id:'leave',t:'휴가·연차를 쓰려고 합니다',s:'연차, 반차, 경조사, 병가',c:'#2F8F6B',k:'휴가 연차 반차 경조 병가 쉬기'},
+    {id:'family',t:'출산이나 육아로 쉬어야 합니다',s:'출산휴가, 배우자 출산휴가, 육아휴직',c:'#C4577F',k:'출산 육아 휴직 임신 배우자 아기 자녀 근로시간 단축'},
+    {id:'resign',t:'퇴사를 준비하고 있습니다',s:'퇴직금, 남은 연차, 4대보험, 서류',c:'#5B6FD6',k:'퇴사 퇴직 사직 퇴직금 이직 실업급여'},
+    {id:'proof',t:'증명서가 필요합니다',s:'재직·경력증명서, 원천징수영수증',c:'#C28A1E',k:'증명서 재직 경력 원천징수 소득 서류 발급'},
+    {id:'pay',t:'급여나 공제가 궁금합니다',s:'4대보험, 연말정산, 급여명세서',c:'#2C8FAE',k:'급여 월급 명세서 4대보험 연말정산 공제 실수령'}
+  ];
+  var TOOLS=[
+    {id:'leave',t:'연차 계산기',s:'입사일로 연차 일수와 잔여 확인',u:'calculators.html#leave',k:'연차 휴가 잔여 입사일'},
+    {id:'severance',t:'퇴직금 계산기',s:'평균임금으로 예상 퇴직금 계산',u:'calculators.html#severance',k:'퇴직금 퇴사 평균임금'},
+    {id:'insurance',t:'4대보험 공제 계산기',s:'월급에서 빠지는 보험료 계산',u:'calculators.html#insurance',k:'4대보험 국민연금 건강보험 고용보험 공제 실수령'}
+  ];
+  var fav=S.get('hr-fav',[]);
+  var $=function(i){return document.getElementById(i)};
+  function renderSits(list){
+    $('sits').innerHTML=list.map(function(x){return '<li class="sit"><a href="diagnosis.html?s='+x.id+'" style="--c:'+x.c+'"><div><b>'+x.t+'</b><span>'+x.s+'</span></div><em aria-hidden="true">›</em></a></li>'}).join('');
+  }
+  function renderTools(list){
+    list=list.slice().sort(function(a,b){return (fav.indexOf(b.id)>-1)-(fav.indexOf(a.id)>-1)});
+    $('tools').innerHTML=list.map(function(x){var f=fav.indexOf(x.id)>-1;
+      return '<li class="tool'+(f?' fav':'')+'"><a href="'+x.u+'"><b>'+x.t+'</b><span>'+x.s+'</span></a><button class="star" type="button" data-id="'+x.id+'" aria-pressed="'+f+'" aria-label="'+x.t+' 즐겨찾기">'+(f?'★':'☆')+'</button></li>'}).join('');
+  }
+  function renderLinks(id,arr){
+    $(id).innerHTML=(arr||[]).map(function(l){return '<li><a href="'+l.url+'"'+(l.url.indexOf('http')===0?' target="_blank" rel="noopener"':'')+'><b>'+l.name+'</b><span>'+l.desc+'</span></a></li>'}).join('');
+  }
+  function match(x,q){return (x.t+' '+x.s+' '+(x.k||'')).toLowerCase().indexOf(q)>-1}
+  function apply(){
+    var q=$('q').value.trim().toLowerCase();
+    var s=q?SITS.filter(function(x){return match(x,q)}):SITS;
+    var t=q?TOOLS.filter(function(x){return match(x,q)}):TOOLS;
+    var a=q?(C.internalLinks||[]).filter(function(l){return (l.name+l.desc).toLowerCase().indexOf(q)>-1}):C.internalLinks;
+    var b=q?(C.publicLinks||[]).filter(function(l){return (l.name+l.desc).toLowerCase().indexOf(q)>-1}):C.publicLinks;
+    renderSits(s);renderTools(t);renderLinks('inLinks',a);renderLinks('pubLinks',b);
+    $('sitSec').hidden=!s.length;$('toolSec').hidden=!t.length;
+    $('linkSec').hidden=!(a&&a.length||b&&b.length);
+    $('empty').style.display=(s.length||t.length||(a&&a.length)||(b&&b.length))?'none':'block';
+  }
+  $('q').addEventListener('input',apply);
+  $('tools').addEventListener('click',function(e){var b=e.target.closest('.star');if(!b)return;var id=b.getAttribute('data-id');var i=fav.indexOf(id);i>-1?fav.splice(i,1):fav.push(id);S.set('hr-fav',fav);apply()});
+  document.addEventListener('keydown',function(e){if(e.key==='/'&&!/input|textarea|select/i.test(document.activeElement.tagName)){e.preventDefault();$('q').focus()}});
+  apply();
+  var deferred=null;
+  window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();deferred=e});
+  $('installBtn').addEventListener('click',function(){if(deferred){deferred.prompt();deferred=null}else{$('installDlg').showModal()}});
+  $('dlgClose').addEventListener('click',function(){$('installDlg').close()});
+})();
+</script>
+</body>
+</html>
