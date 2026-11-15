@@ -1,12 +1,12 @@
 /* 이 파일만 고치면 모든 페이지에 반영됩니다. */
 window.HR_CONFIG = {
-  company: "○○주식회사",
-  team: "인사팀",
-  phone: "02-0000-0000",
-  phoneExt: "내선 100",
-  email: "hr@example.com",
-  hours: "평일 09:00–18:00 (점심 12:00–13:00)",
-  location: "본사 ○층 인사팀",
+  company: "미래에셋생명",
+  team: "인사혁신팀",
+  phone: "02-3271-4298",
+  phoneExt: "내선 4298",
+  email: "byeri5124@miraeasset.com",
+  hours: "평일 08:30–18:00 (점심 11:30–13:00)",
+  location: "서울 마포구 만리재로 24, 미래에셋생명 빌딩 17층 인사혁신팀",
   // 사내 시스템 링크: url을 실제 주소로 바꾸세요
   internalLinks: [
     { name: "근태·휴가 시스템", desc: "연차 신청, 잔여 연차 확인", url: "#" },
