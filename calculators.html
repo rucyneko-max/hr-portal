@@ -4,16 +4,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
-<meta name="theme-color" content="#0E5A52">
+<meta name="theme-color" content="#1E3F78">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <title>계산기</title>
 <style>
-:root{--bg:#F3F6F4;--surface:#fff;--ink:#12211D;--muted:#566863;--line:#D5DEDA;--primary:#0E5A52;--on-primary:#fff;--mark:#FFD24A;--soft:#E6EFEB;--warn-bg:#FFF3CC;--warn-ink:#5B4300;--shadow:0 1px 2px rgba(14,40,34,.06),0 6px 20px -8px rgba(14,40,34,.14)}
-:root[data-theme=dark]{--bg:#0F1A17;--surface:#16251F;--ink:#E8F0EC;--muted:#98ABA4;--line:#2A3D36;--primary:#5FD0BF;--on-primary:#06231E;--soft:#1D3029;--warn-bg:#3A3010;--warn-ink:#FFE9A6;--shadow:none}
-@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0F1A17;--surface:#16251F;--ink:#E8F0EC;--muted:#98ABA4;--line:#2A3D36;--primary:#5FD0BF;--on-primary:#06231E;--soft:#1D3029;--warn-bg:#3A3010;--warn-ink:#FFE9A6;--shadow:none}}
+:root{--bg:#EDF1F7;--surface:#fff;--ink:#172033;--muted:#5B6780;--line:#D9E0EC;--primary:#1E3F78;--on-primary:#fff;--mark:#FFD24A;--soft:#E4EAF4;--warn-bg:#FFF3CC;--warn-ink:#5B4300;--shadow:0 1px 2px rgba(23,32,51,.05),0 8px 24px -10px rgba(23,32,51,.16)}
+:root[data-theme=dark]{--bg:#0E1626;--surface:#162238;--ink:#E6ECF7;--muted:#9AA8C4;--line:#27385A;--primary:#7FA6F0;--on-primary:#0B1A33;--soft:#1C2C49;--warn-bg:#3A3010;--warn-ink:#FFE9A6;--shadow:none}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0E1626;--surface:#162238;--ink:#E6ECF7;--muted:#9AA8C4;--line:#27385A;--primary:#7FA6F0;--on-primary:#0B1A33;--soft:#1C2C49;--warn-bg:#3A3010;--warn-ink:#FFE9A6;--shadow:none}}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard Variable",Pretendard,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;font-size:16px;line-height:1.65;word-break:keep-all;overflow-wrap:break-word}
@@ -23,14 +23,18 @@ button,input,select{font:inherit;color:inherit}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .skip{position:absolute;left:8px;top:-60px;background:var(--primary);color:var(--on-primary);padding:8px 14px;border-radius:8px;z-index:50}
 .skip:focus{top:8px}
-.wrap{max-width:960px;margin:0 auto;padding:0 20px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
 .top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:60px}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:64px}
 .brand{display:flex;align-items:center;gap:10px;text-decoration:none;min-width:0}
 .brand svg{flex:none}
 .brand span{display:flex;flex-direction:column;line-height:1.25;min-width:0}
-.brand b{font-size:16px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand b{font-size:16px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .brand i{font-style:normal;font-size:12.5px;color:var(--muted)}
+.mainnav{display:none;gap:4px;flex:1;margin-left:12px}
+.mainnav a{padding:8px 14px;border-radius:999px;text-decoration:none;font-weight:600;font-size:15px;color:var(--muted)}
+.mainnav a:hover{background:var(--soft);color:var(--ink)}
+@media(min-width:820px){.mainnav{display:flex}}
 .acts{display:flex;gap:6px;flex:none}
 .pill{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 14px;font-size:14px;cursor:pointer;min-height:38px}
 .pill:hover{border-color:var(--primary)}
@@ -40,8 +44,8 @@ button,input,select{font:inherit;color:inherit}
 h1{font-size:clamp(28px,6.2vw,42px);line-height:1.25;letter-spacing:-.02em;margin:0 0 10px;font-weight:800}
 h2{font-size:20px;margin:0 0 14px;letter-spacing:-.01em}
 h3{font-size:15px;margin:0 0 8px;color:var(--muted);font-weight:600}
-.lead{color:var(--muted);margin:0;max-width:34em}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}
+.lead{color:var(--muted);margin:0;max-width:36em}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:46px;padding:0 20px;border-radius:12px;border:1px solid var(--primary);background:var(--primary);color:var(--on-primary);font-weight:700;text-decoration:none;cursor:pointer}
 .btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
 .btn.ghost:hover{border-color:var(--primary)}
@@ -92,6 +96,7 @@ details .row2{margin-top:12px}
     <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><rect width="34" height="34" rx="9" fill="var(--primary)"/><path d="M9 12.5A3.5 3.5 0 0 1 12.5 9h9a3.5 3.5 0 0 1 3.5 3.5v5a3.5 3.5 0 0 1-3.5 3.5H17l-4 3.5V21h-.5A3.5 3.5 0 0 1 9 17.5z" fill="var(--on-primary)"/><circle cx="25.5" cy="9" r="4" fill="#FFD24A"/></svg>
     <span><b data-cfg="company"></b><i>직원 포털 · <span data-cfg="team" style="display:inline"></span></i></span>
   </a>
+  <nav class="mainnav" aria-label="주 메뉴"><a href="index.html">홈</a><a href="diagnosis.html">상황별 안내</a><a href="calculators.html#yearend">소득세·연말정산</a><a href="calendar.html">일정·도구</a></nav>
   <nav class="acts" aria-label="도구">
     <button class="pill" id="installBtn" type="button">앱 설치</button>
     <button class="pill" id="themeBtn" type="button" aria-label="화면 밝기 바꾸기">어둡게</button>
@@ -106,6 +111,11 @@ details .row2{margin-top:12px}
     <button role="tab" id="t-insurance" aria-controls="p-insurance" data-k="insurance">월급 실수령</button>
     <button role="tab" id="t-yearend" aria-controls="p-yearend" data-k="yearend">연말정산 예상</button>
     <button role="tab" id="t-retax" aria-controls="p-retax" data-k="retax">퇴직소득세</button>
+    <button role="tab" id="t-income" aria-controls="p-income" data-k="income">종합소득세 간이추정</button>
+    <button role="tab" id="t-refund" aria-controls="p-refund" data-k="refund">경정청구</button>
+    <button role="tab" id="t-penalty" aria-controls="p-penalty" data-k="penalty">가산세</button>
+    <button role="tab" id="t-reverse" aria-controls="p-reverse" data-k="reverse">세후·세전 역산</button>
+    <button role="tab" id="t-wh" aria-controls="p-wh" data-k="wh">원천세 정산</button>
   </div>
 
   <!-- 연차 -->
@@ -242,6 +252,129 @@ details .row2{margin-top:12px}
       <p class="label">2013년 이후 근속분 기준의 일반 계산식입니다. 임원 퇴직금 한도 등 특례는 반영하지 않았습니다. 실제 원천징수액은 회사 계산으로 확정됩니다.</p>
     </div>
   </section>
+
+  <!-- 종합소득세 간이추정 -->
+  <section class="panel" id="p-income" role="tabpanel" aria-labelledby="t-income" hidden>
+    <div class="form card">
+      <h2>종합소득세 간이추정</h2>
+      <h3>사업(프리랜서·부업) 소득</h3>
+      <div class="field"><label for="c-rev">연 수입금액(원)</label><input id="c-rev" type="text" inputmode="numeric" placeholder="예: 24,000,000"></div>
+      <div class="row2">
+        <div class="field"><label for="c-mode">경비 계산 방식</label><select id="c-mode"><option value="rate">경비율(%)로</option><option value="actual">실제 경비(원)로</option></select></div>
+        <div class="field"><label for="c-val" id="c-val-l">경비율(%)</label><input id="c-val" type="text" inputmode="decimal" placeholder="예: 64.1"><small>경비율은 홈택스에서 업종코드로 조회합니다.</small></div>
+      </div>
+      <h3>근로소득이 있다면</h3>
+      <div class="row2">
+        <div class="field"><label for="c-wage">연 총급여(원)</label><input id="c-wage" type="text" inputmode="numeric" value="0"></div>
+        <div class="field"><label for="c-whw">근로소득으로 이미 낸 소득세(원)</label><input id="c-whw" type="text" inputmode="numeric" value="0"><small>연말정산 결정세액을 넣으세요.</small></div>
+      </div>
+      <h3>공제</h3>
+      <div class="row2">
+        <div class="field"><label for="c-fam">기본공제 인원</label><input id="c-fam" type="text" inputmode="numeric" value="1"><small>본인 포함</small></div>
+        <div class="field"><label for="c-kid">8세 이상 자녀 수</label><input id="c-kid" type="text" inputmode="numeric" value="0"></div>
+      </div>
+      <div class="field"><label for="c-pen">국민연금 납부액(연, 원)</label><input id="c-pen" type="text" inputmode="numeric" value="0"></div>
+      <h3>이미 낸 세금</h3>
+      <div class="field"><label><input id="c-wh" type="checkbox" checked style="width:auto;min-height:0;margin-right:8px">수입금액에서 3.3%를 떼고 받았습니다</label><small>소득세 3%와 지방소득세 0.3%를 이미 낸 것으로 계산합니다.</small></div>
+    </div>
+    <div class="out card" aria-live="polite">
+      <p class="label" id="c-lab">예상 납부·환급액(소득세)</p>
+      <p class="big" id="c-total">-<small>원</small></p>
+      <p class="err" id="c-err"></p>
+      <dl class="kv" id="c-kv"></dl>
+      <p class="label">간이 추정입니다. 기장·성실신고 혜택, 중소기업 취업 감면, 건강보험료·기부금·연금계좌 공제 등은 반영하지 않았습니다. 확정 금액은 홈택스 신고 화면에서 확인하세요. 5월에 신고하지 않으면 무신고 가산세가 붙을 수 있습니다.</p>
+    </div>
+  </section>
+
+  <!-- 경정청구 -->
+  <section class="panel" id="p-refund" role="tabpanel" aria-labelledby="t-refund" hidden>
+    <div class="form card">
+      <h2>경정청구 시뮬레이션</h2>
+      <div class="field"><label for="f-yr">환급받고 싶은 귀속연도</label><select id="f-yr"></select><small>연말정산은 법정신고기한이 지난 후 5년 안에 청구할 수 있습니다.</small></div>
+      <h3>그해 내 숫자 (근로소득 원천징수영수증)</h3>
+      <div class="field"><label for="f-gross">총급여(원)</label><input id="f-gross" type="text" inputmode="numeric" placeholder="예: 48,000,000"></div>
+      <div class="row2">
+        <div class="field"><label for="f-base">과세표준(원)</label><input id="f-base" type="text" inputmode="numeric"></div>
+        <div class="field"><label for="f-fin">결정세액(소득세, 원)</label><input id="f-fin" type="text" inputmode="numeric"></div>
+      </div>
+      <h3>빠뜨린 공제</h3>
+      <div class="row2">
+        <div class="field"><label for="f-fam">추가 부양가족(명)</label><input id="f-fam" type="text" inputmode="numeric" value="0"><small>1명당 150만 원 소득공제</small></div>
+        <div class="field"><label for="f-ded">기타 소득공제 누락액(원)</label><input id="f-ded" type="text" inputmode="numeric" value="0"></div>
+        <div class="field"><label for="f-med">의료비(총급여 3% 초과분, 원)</label><input id="f-med" type="text" inputmode="numeric" value="0"></div>
+        <div class="field"><label for="f-edu">교육비(원)</label><input id="f-edu" type="text" inputmode="numeric" value="0"></div>
+        <div class="field"><label for="f-don">지정기부금(원)</label><input id="f-don" type="text" inputmode="numeric" value="0"></div>
+        <div class="field"><label for="f-ins">보장성 보험료(원)</label><input id="f-ins" type="text" inputmode="numeric" value="0"></div>
+        <div class="field"><label for="f-rent">월세 지급액(원)</label><input id="f-rent" type="text" inputmode="numeric" value="0"></div>
+        <div class="field"><label for="f-pen">연금저축·IRP 납입(원)</label><input id="f-pen" type="text" inputmode="numeric" value="0"></div>
+      </div>
+      <div class="field"><label for="f-cred">기타 세액공제 누락액(원)</label><input id="f-cred" type="text" inputmode="numeric" value="0"></div>
+      <div class="field"><label><input id="f-std" type="checkbox" checked style="width:auto;min-height:0;margin-right:8px">그해 표준세액공제(13만 원)를 받았습니다</label><small>특별세액공제(의료·교육·기부·보험)는 13만 원을 넘는 부분만 추가 환급됩니다.</small></div>
+    </div>
+    <div class="out card" aria-live="polite">
+      <p class="label">예상 환급액(소득세)</p>
+      <p class="big" id="f-total">-<small>원</small></p>
+      <p class="err" id="f-err"></p>
+      <dl class="kv" id="f-kv"></dl>
+      <p class="label">환급은 그해 낸 결정세액 범위 안에서만 가능합니다. 환급가산금(이자)은 반영하지 않았습니다. 청구는 홈택스에서 직접 하고, 증빙 서류가 필요합니다.</p>
+    </div>
+  </section>
+
+  <!-- 가산세 -->
+  <section class="panel" id="p-penalty" role="tabpanel" aria-labelledby="t-penalty" hidden>
+    <div class="form card">
+      <h2>가산세 계산기</h2>
+      <div class="field"><label for="n-type">어떤 경우인가요?</label><select id="n-type"><option value="nofile">신고를 못 해서 기한 후에 신고합니다(무신고)</option><option value="under">적게 신고해서 수정신고합니다(과소신고)</option><option value="pay">신고는 했는데 세금을 늦게 냅니다(납부지연)</option></select></div>
+      <div class="field"><label for="n-tax">본세(추가로 내야 할 세금, 원)</label><input id="n-tax" type="text" inputmode="numeric" placeholder="예: 1,000,000"></div>
+      <div class="row2">
+        <div class="field"><label for="n-due">법정 신고·납부기한</label><input id="n-due" type="date"></div>
+        <div class="field"><label for="n-paid">신고·납부한 날</label><input id="n-paid" type="date"></div>
+      </div>
+      <div class="field" id="n-fraud-f"><label><input id="n-fraud" type="checkbox" style="width:auto;min-height:0;margin-right:8px">부정행위(이중장부·허위증빙 등)에 해당합니다</label><small>단순 실수나 누락은 해당하지 않습니다.</small></div>
+    </div>
+    <div class="out card" aria-live="polite">
+      <p class="label">예상 가산세 합계</p>
+      <p class="big" id="n-total">-<small>원</small></p>
+      <p class="err" id="n-err"></p>
+      <dl class="kv" id="n-kv"></dl>
+      <p class="label">무신고는 기한 후 신고 감면, 과소신고는 수정신고 감면을 받는 경우(부정행위 제외)로 계산했습니다. 세무서가 결정·경정을 알리기 전에 신고해야 감면됩니다. 지방소득세는 따로 계산합니다. 고지서의 납부기한까지 내지 않으면 가산세가 더 붙습니다.</p>
+    </div>
+  </section>
+
+  <!-- 세후·세전 역산 -->
+  <section class="panel" id="p-reverse" role="tabpanel" aria-labelledby="t-reverse" hidden>
+    <div class="form card">
+      <h2>세후·세전 역산</h2>
+      <div class="field"><label for="v-net">받고 싶은 월 실수령액(원)</label><input id="v-net" type="text" inputmode="numeric" placeholder="예: 3,000,000"></div>
+      <div class="field"><label for="v-non">비과세 금액(원/월)</label><input id="v-non" type="text" inputmode="numeric" value="0"><small>식대 등</small></div>
+      <div class="field"><label for="v-rate">소득세+지방소득세 비율(%)</label><input id="v-rate" type="text" inputmode="decimal" placeholder="예: 3.5"><small>급여명세서의 (소득세+지방소득세)÷세전 월급을 넣으세요. 비우면 소득세 없이 계산합니다.</small></div>
+    </div>
+    <div class="out card" aria-live="polite">
+      <p class="label">필요한 세전 월급(추정)</p>
+      <p class="big" id="v-total">-<small>원</small></p>
+      <p class="err" id="v-err"></p>
+      <dl class="kv" id="v-kv"></dl>
+      <p class="label">소득세는 간이세액표로 정해져 입력한 비율로만 추정합니다. 소득세 비율을 비우면 실제로 필요한 금액보다 적게 나옵니다. 연봉 협상 전에 대략 확인하는 용도입니다.</p>
+    </div>
+  </section>
+
+  <!-- 원천세 정산 -->
+  <section class="panel" id="p-wh" role="tabpanel" aria-labelledby="t-wh" hidden>
+    <div class="form card">
+      <h2>원천세 정산 (회사용)</h2>
+      <div class="field"><label for="w-a">이번 달 원천징수한 소득세 합계(원)</label><input id="w-a" type="text" inputmode="numeric" placeholder="급여에서 뗀 소득세 합계"></div>
+      <div class="field"><label for="w-b">연말정산 환급액 합계(원)</label><input id="w-b" type="text" inputmode="numeric" value="0"><small>직원에게 돌려준 금액</small></div>
+      <div class="field"><label for="w-c">연말정산 추가징수액 합계(원)</label><input id="w-c" type="text" inputmode="numeric" value="0"><small>직원에게 더 걷은 금액</small></div>
+      <div class="field"><label for="w-d">전월에서 넘어온 환급세액(원)</label><input id="w-d" type="text" inputmode="numeric" value="0"></div>
+    </div>
+    <div class="out card" aria-live="polite">
+      <p class="label" id="w-lab">이번 달 납부할 원천세</p>
+      <p class="big" id="w-total">-<small>원</small></p>
+      <p class="err" id="w-err"></p>
+      <dl class="kv" id="w-kv"></dl>
+      <p class="label">연말정산 환급액은 2월분 급여를 줄 때 직원에게 먼저 돌려주고, 그 금액을 원천세에서 빼서 신고·납부합니다. 지방소득세(특별징수분)는 따로 정산됩니다.</p>
+    </div>
+  </section>
 </main>
 <footer><div class="wrap">
   <p><b data-cfg="company"></b> <b data-cfg="team"></b> · <span data-cfg="location"></span></p>
@@ -289,6 +422,11 @@ window.HR_CONFIG = {
     cardDebitRate: 0.30,              // 체크카드·현금영수증
     cardCaps: [[70000000,3000000],[120000000,2500000],[null,2000000]] // [총급여 상한, 공제 한도]
   },
+  // 가산세·환급 기준(국세기본법). 개정되면 인사팀이 확인 후 고치세요.
+  penalty: {
+    noFile: 0.20, underFile: 0.10, fraud: 0.40, // 무신고 20%, 과소신고 10%, 부정행위 40%
+    daily: 0.00022                               // 납부지연 1일 10만분의 22
+  },
   rulesAsOf: "2026년 11월"
 };
 
@@ -328,10 +466,10 @@ window.HR_CONFIG = {
   function fm(a,b){var m=(b.getFullYear()-a.getFullYear())*12+b.getMonth()-a.getMonth();if(b.getDate()<a.getDate())m--;return m}
   function kv(id,rows){$(id).innerHTML=rows.map(function(r){return '<dt'+(r[2]?' class="tot"':'')+'>'+r[0]+'</dt><dd>'+r[1]+'</dd>'}).join('')}
   function money(id){var el=$(id);el.addEventListener('blur',function(){var v=parseFloat(el.value.replace(/,/g,''));if(!isNaN(v)&&v>=1000)el.value=Math.round(v).toLocaleString('ko-KR')})}
-  ['l-wage','s-wage3','s-bonus','s-al','s-ord','i-pay','i-non','i-tax','r-min','r-max','y-gross','y-pen','y-hi','y-credit','y-debit','y-med-self','y-med-oth','y-edu-self','y-edu-kid','y-edu-uni','y-ins','y-don','y-rent','y-ps','y-irp','y-paid','t-pay'].forEach(money);
+  ['l-wage','s-wage3','s-bonus','s-al','s-ord','i-pay','i-non','i-tax','r-min','r-max','y-gross','y-pen','y-hi','y-credit','y-debit','y-med-self','y-med-oth','y-edu-self','y-edu-kid','y-edu-uni','y-ins','y-don','y-rent','y-ps','y-irp','y-paid','t-pay','f-gross','f-base','f-fin','f-ded','f-med','f-edu','f-don','f-ins','f-rent','f-pen','f-cred','c-rev','c-val','c-wage','c-whw','c-pen','n-tax','v-net','v-non','w-a','w-b','w-c','w-d'].forEach(money);
 
   var today=new Date();
-  $('l-asof').value=iso(today);$('s-end').value=iso(today);$('t-end').value=iso(today);
+  $('l-asof').value=iso(today);$('s-end').value=iso(today);$('t-end').value=iso(today);$('n-paid').value=iso(today);
 
   function calcLeave(){
     $('l-err').textContent='';
@@ -445,7 +583,100 @@ window.HR_CONFIG = {
     $('t-total').innerHTML=won(tax+loc)+'<small>원</small>';
     kv('t-kv',[['근속연수(1년 미만 올림)',y+'년'],['근속연수공제',won(sd)+'원'],['환산급여',won(conv)+'원'],['환산급여공제',won(cd)+'원'],['과세표준',won(base)+'원'],['퇴직소득세',won(tax)+'원'],['지방소득세(10%)',won(loc)+'원'],['세금 뗀 뒤 받는 금액',won(pay-tax-loc)+'원',1]]);
   }
-  var fn={leave:calcLeave,severance:calcSev,insurance:calcIns,yearend:calcYE,retax:calcRet};
+
+  function insOf(base){var R=C.rates;
+    var pb=Math.round(Math.min(Math.max(base,R.pensionMin),R.pensionMax)/1000)*1000;
+    var np=fl10(pb*R.pension/100),hi=fl10(base*R.health/100),lt=fl10(hi*R.ltc/100),ei=fl10(base*R.employment/100);
+    return {np:np,hi:hi,lt:lt,ei:ei,tot:np+hi+lt+ei}}
+  function addM(d,n){return new Date(d.getFullYear(),d.getMonth()+n,d.getDate())}
+  function wk(d){var x=new Date(d.getFullYear(),d.getMonth(),d.getDate());while(x.getDay()===0||x.getDay()===6)x.setDate(x.getDate()+1);return x}
+
+  // 가산세
+  function calcPen(){
+    $('n-err').textContent='';var tax=num('n-tax'),type=$('n-type').value;
+    $('n-fraud-f').hidden=type==='pay';
+    if(!tax||!$('n-due').value||!$('n-paid').value){$('n-total').innerHTML='-<small>원</small>';kv('n-kv',[]);return}
+    var due=pd($('n-due').value),paid=pd($('n-paid').value),P=C.penalty;
+    if(paid<=due){$('n-total').innerHTML='0<small>원</small>';$('n-err').textContent='기한 안에 신고·납부해서 가산세가 없습니다.';kv('n-kv',[['본세',won(tax)+'원']]);return}
+    var days=days_(due,paid),fraud=$('n-fraud').checked&&type!=='pay';
+    var rate=type==='nofile'?(fraud?P.fraud:P.noFile):type==='under'?(fraud?P.fraud:P.underFile):0;
+    var base=fl10(tax*rate),cut=0,tbl=[];
+    if(!fraud&&type==='nofile')tbl=[[1,.5],[3,.3],[6,.2]];
+    if(!fraud&&type==='under')tbl=[[1,.9],[3,.75],[6,.5],[12,.3],[18,.2],[24,.1]];
+    for(var i=0;i<tbl.length;i++){if(paid<=addM(due,tbl[i][0])){cut=tbl[i][1];break}}
+    var relief=fl10(base*cut),delay=fl10(tax*days*P.daily),total=base-relief+delay;
+    var rows=[['본세',won(tax)+'원'],['기한 후 경과일수',days+'일']];
+    if(type!=='pay'){rows.push([(type==='nofile'?'무신고':'과소신고')+'가산세('+Math.round(rate*100)+'%)',won(base)+'원']);
+      if(!fraud)rows.push(['감면('+Math.round(cut*100)+'%)','-'+won(relief)+'원']);else rows.push(['감면','부정행위는 감면 없음'])}
+    rows.push(['납부지연가산세(하루 '+(Math.round(P.daily*1e5)/1e3)+'%)',won(delay)+'원'],['가산세 합계',won(total)+'원',1],['본세+가산세',won(tax+total)+'원']);
+    $('n-total').innerHTML=won(total)+'<small>원</small>';kv('n-kv',rows);
+  }
+  function days_(a,b){return Math.round((b-a)/864e5)}
+
+  // 경정청구
+  (function(){var y=new Date().getFullYear(),h='';for(var k=y-5;k<=y-1;k++)h+='<option value="'+k+'">'+k+'년 귀속</option>';$('f-yr').innerHTML=h;$('f-yr').value=y-1})();
+  function calcRef(){
+    $('f-err').textContent='';var yr=+$('f-yr').value,g=num('f-gross'),b=num('f-base'),D=num('f-fin');
+    var dl=wk(addM(wk(new Date(yr+1,4,31)),60)),today=new Date();today=new Date(today.getFullYear(),today.getMonth(),today.getDate());
+    var left=days_(today,dl);
+    if(!g||!b){$('f-total').innerHTML='-<small>원</small>';kv('f-kv',[['청구 기한',iso(dl)],['남은 일수',left>=0?left+'일':'기한 지남']]);if(left<0)$('f-err').textContent='이 귀속연도는 청구 기한이 지났습니다.';return}
+    var T_=C.tax,extraInc=num('f-fam')*T_.basicDeduction+num('f-ded');
+    var oldTax=prog(b),newTax=prog(Math.max(0,b-extraInc));
+    var gain1=(oldTax-newTax)-(earnedCredit(oldTax,g)-earnedCredit(newTax,g));
+    var spec=num('f-med')*.15+num('f-edu')*.15+Math.min(num('f-don'),1e7)*.15+Math.min(num('f-ins'),1e6)*.12;
+    var specGain=$('f-std').checked?Math.max(0,spec-T_.standardCredit):spec;
+    var rent=g<=8e7?Math.min(num('f-rent'),1e7)*(g<=55e6?.17:.15):0;
+    var pen=Math.min(num('f-pen'),9e6)*(g<=55e6?.165:.132);
+    var total=gain1+specGain+rent+pen+num('f-cred'),cap=D>0?Math.min(total,D):total,refund=Math.max(0,Math.round(cap));
+    $('f-total').innerHTML=won(refund)+'<small>원</small>';
+    var rows=[['청구 기한',iso(dl)],['남은 일수',left>=0?left+'일':'기한 지남'],['소득공제 추가분 효과',won(gain1)+'원'],['특별세액공제 추가분',won(specGain)+'원'],['월세·연금계좌 세액공제',won(rent+pen)+'원'],['기타 세액공제',won(num('f-cred'))+'원']];
+    if(D>0&&total>D)rows.push(['그해 결정세액 한도 적용',won(D)+'원']);
+    rows.push(['예상 환급 소득세',won(refund)+'원',1],['지방소득세 환급(10%)',won(fl10(refund*.1))+'원'],['합계',won(refund+fl10(refund*.1))+'원']);
+    kv('f-kv',rows);if(left<0)$('f-err').textContent='이 귀속연도는 청구 기한이 지났습니다.';else if(!D)$('f-err').textContent='결정세액을 넣으면 환급 한도까지 반영합니다.';
+  }
+
+  // 종합소득세 간이추정
+  $('c-mode').addEventListener('change',function(){$('c-val-l').textContent=$('c-mode').value==='rate'?'경비율(%)':'실제 경비(원)'});
+  function calcInc(){
+    $('c-err').textContent='';var rev=num('c-rev');
+    if(!rev){$('c-total').innerHTML='-<small>원</small>';kv('c-kv',[]);return}
+    var T_=C.tax,v=num('c-val'),exp=$('c-mode').value==='rate'?rev*Math.min(v,100)/100:v;
+    var biz=Math.max(0,rev-exp),g=num('c-wage'),wage=g>0?g-earnedDed(g):0,total=biz+wage;
+    var fam=Math.max(1,Math.round(num('c-fam'))),kid=Math.max(0,Math.round(num('c-kid')));
+    var ded=fam*T_.basicDeduction+num('c-pen'),base=Math.max(0,total-ded),tax=prog(base);
+    var wageTax=total>0?tax*wage/total:0,ec=g>0?earnedCredit(wageTax,g):0,cc=childCredit(kid),std=g>0?T_.standardCredit:70000;
+    var fin=Math.max(0,tax-ec-cc-std),loc=fl10(fin*.1);
+    var paidTax=(g>0?num('c-whw'):0)+($('c-wh').checked?rev*.03:0),paidLoc=$('c-wh').checked?rev*.003:0;
+    var diff=fin-paidTax;
+    $('c-lab').textContent=diff>=0?'예상 추가 납부 소득세':'예상 환급 소득세';
+    $('c-total').innerHTML=won(Math.abs(diff))+'<small>원</small>';
+    var dl=loc-paidLoc;
+    kv('c-kv',[['사업소득금액',won(biz)+'원'],['근로소득금액',won(wage)+'원'],['소득공제(인적·연금)',won(ded)+'원'],['과세표준',won(base)+'원'],['산출세액',won(tax)+'원'],['세액공제(근로·자녀·표준)',won(ec+cc+std)+'원'],['결정세액',won(fin)+'원',1],['이미 낸 소득세',won(paidTax)+'원'],['지방소득세(결정세액의 10%)',won(loc)+'원'],['지방소득세 '+(dl>=0?'추가 납부':'환급'),won(Math.abs(dl))+'원']]);
+    if(!v&&$('c-mode').value==='rate')$('c-err').textContent='경비율을 넣지 않아 경비 0원으로 계산했습니다.';
+  }
+
+  // 세후·세전 역산
+  function calcRev(){
+    $('v-err').textContent='';var net=num('v-net'),non=num('v-non'),rt=num('v-rate')/100;
+    if(!net){$('v-total').innerHTML='-<small>원</small>';kv('v-kv',[]);return}
+    function f(g){return g-insOf(Math.max(0,g-non)).tot-g*rt}
+    var lo=net,hi=net*3;for(var i=0;i<60;i++){var mid=(lo+hi)/2;if(f(mid)<net)lo=mid;else hi=mid}
+    var g=Math.ceil(hi/10)*10,ins=insOf(Math.max(0,g-non));
+    $('v-total').innerHTML=won(g)+'<small>원</small>';
+    kv('v-kv',[['연봉 환산(×12)',won(g*12)+'원'],['국민연금',won(ins.np)+'원'],['건강보험',won(ins.hi)+'원'],['장기요양보험',won(ins.lt)+'원'],['고용보험',won(ins.ei)+'원'],['소득세·지방소득세(입력 비율)',won(g*rt)+'원'],['월 실수령액',won(f(g))+'원',1]]);
+    if(!rt)$('v-err').textContent='소득세 비율을 넣지 않아 소득세 없이 계산했습니다.';
+  }
+
+  // 원천세 정산
+  function calcWh(){
+    $('w-err').textContent='';var a=num('w-a');
+    if(!a&&!num('w-b')){$('w-total').innerHTML='-<small>원</small>';kv('w-kv',[]);return}
+    var b=num('w-b'),c=num('w-c'),d=num('w-d'),r=a+c-b-d;
+    if(r>=0){$('w-lab').textContent='이번 달 납부할 원천세';$('w-total').innerHTML=won(r)+'<small>원</small>'}
+    else{$('w-lab').textContent='환급받거나 다음 달로 넘길 세액';$('w-total').innerHTML=won(-r)+'<small>원</small>';$('w-err').textContent='납부할 세액보다 환급액이 큽니다. 환급을 신청하거나 다음 달로 넘길 수 있습니다.'}
+    kv('w-kv',[['원천징수한 소득세',won(a)+'원'],['연말정산 추가징수액','+'+won(c)+'원'],['연말정산 환급액','-'+won(b)+'원'],['전월 이월 환급세액','-'+won(d)+'원'],['납부(환급) 세액',won(r)+'원',1]]);
+  }
+  var fn={leave:calcLeave,severance:calcSev,insurance:calcIns,yearend:calcYE,retax:calcRet,income:calcInc,refund:calcRef,penalty:calcPen,reverse:calcRev,wh:calcWh};
   Object.keys(fn).forEach(function(k){var p=$('p-'+k);p.addEventListener('input',fn[k]);p.addEventListener('change',fn[k])});
   function show(k){
     if(!fn[k])k='leave';

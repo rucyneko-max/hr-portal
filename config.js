@@ -5,7 +5,7 @@ window.HR_CONFIG = {
   phone: "02-3271-4298",
   phoneExt: "내선 4298",
   email: "hr@example.com",
-  hours: "평일 08:30–18:00 (점심 11:30–13:00)",
+  hours: "평일 09:00–18:00 (점심 12:00–13:00)",
   location: "본사 17층 인사혁신팀",
   // 사내 시스템 링크: url을 실제 주소로 바꾸세요
   internalLinks: [
@@ -36,6 +36,11 @@ window.HR_CONFIG = {
     cardCreditRate: 0.15,             // 신용카드
     cardDebitRate: 0.30,              // 체크카드·현금영수증
     cardCaps: [[70000000,3000000],[120000000,2500000],[null,2000000]] // [총급여 상한, 공제 한도]
+  },
+  // 가산세·환급 기준(국세기본법). 개정되면 인사혁신팀이 확인 후 고치세요.
+  penalty: {
+    noFile: 0.20, underFile: 0.10, fraud: 0.40, // 무신고 20%, 과소신고 10%, 부정행위 40%
+    daily: 0.00022                               // 납부지연 1일 10만분의 22
   },
   rulesAsOf: "2026년 11월"
 };

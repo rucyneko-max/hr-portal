@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#1E3F78">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<title>신고기한 캘린더</title>
+<style>
+:root{--bg:#EDF1F7;--surface:#fff;--ink:#172033;--muted:#5B6780;--line:#D9E0EC;--primary:#1E3F78;--on-primary:#fff;--mark:#FFD24A;--soft:#E4EAF4;--warn-bg:#FFF3CC;--warn-ink:#5B4300;--shadow:0 1px 2px rgba(23,32,51,.05),0 8px 24px -10px rgba(23,32,51,.16)}
+:root[data-theme=dark]{--bg:#0E1626;--surface:#162238;--ink:#E6ECF7;--muted:#9AA8C4;--line:#27385A;--primary:#7FA6F0;--on-primary:#0B1A33;--soft:#1C2C49;--warn-bg:#3A3010;--warn-ink:#FFE9A6;--shadow:none}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0E1626;--surface:#162238;--ink:#E6ECF7;--muted:#9AA8C4;--line:#27385A;--primary:#7FA6F0;--on-primary:#0B1A33;--soft:#1C2C49;--warn-bg:#3A3010;--warn-ink:#FFE9A6;--shadow:none}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard Variable",Pretendard,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;font-size:16px;line-height:1.65;word-break:keep-all;overflow-wrap:break-word}
+a{color:inherit}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--primary);outline-offset:2px;border-radius:6px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:8px;top:-60px;background:var(--primary);color:var(--on-primary);padding:8px 14px;border-radius:8px;z-index:50}
+.skip:focus{top:8px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:64px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;min-width:0}
+.brand svg{flex:none}
+.brand span{display:flex;flex-direction:column;line-height:1.25;min-width:0}
+.brand b{font-size:16px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand i{font-style:normal;font-size:12.5px;color:var(--muted)}
+.mainnav{display:none;gap:4px;flex:1;margin-left:12px}
+.mainnav a{padding:8px 14px;border-radius:999px;text-decoration:none;font-weight:600;font-size:15px;color:var(--muted)}
+.mainnav a:hover{background:var(--soft);color:var(--ink)}
+@media(min-width:820px){.mainnav{display:flex}}
+.acts{display:flex;gap:6px;flex:none}
+.pill{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 14px;font-size:14px;cursor:pointer;min-height:38px}
+.pill:hover{border-color:var(--primary)}
+.sub{padding:18px 0 0;font-size:14.5px}
+.sub a{color:var(--muted);text-decoration:none;display:inline-flex;align-items:center;min-height:36px}
+.sub a:hover{color:var(--primary);text-decoration:underline}
+h1{font-size:clamp(28px,6.2vw,42px);line-height:1.25;letter-spacing:-.02em;margin:0 0 10px;font-weight:800}
+h2{font-size:20px;margin:0 0 14px;letter-spacing:-.01em}
+h3{font-size:15px;margin:0 0 8px;color:var(--muted);font-weight:600}
+.lead{color:var(--muted);margin:0;max-width:36em}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:46px;padding:0 20px;border-radius:12px;border:1px solid var(--primary);background:var(--primary);color:var(--on-primary);font-weight:700;text-decoration:none;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--primary)}
+.note{background:var(--warn-bg);color:var(--warn-ink);border-radius:12px;padding:14px 16px;font-size:15px}
+.note b{display:block;margin-bottom:2px}
+footer{margin-top:56px;border-top:1px solid var(--line);padding:28px 0 48px;color:var(--muted);font-size:13.5px}
+footer b{color:var(--ink)}
+footer p{margin:0 0 6px}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+[hidden]{display:none!important}
+
+.head{padding:18px 0 6px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 4px}
+.chips button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:8px 16px;font-weight:600;cursor:pointer;min-height:40px}
+.chips button[aria-pressed=true]{background:var(--primary);color:var(--on-primary);border-color:var(--primary)}
+.month{margin-top:26px}
+.month h2{font-size:18px;margin:0 0 10px;display:flex;align-items:baseline;gap:8px}
+.month h2 small{color:var(--muted);font-weight:500;font-size:14px}
+.list{list-style:none;margin:0;padding:0;border:1px solid var(--line);border-radius:16px;background:var(--surface);overflow:hidden;box-shadow:var(--shadow)}
+.ev{display:grid;grid-template-columns:64px 1fr auto;gap:14px;align-items:center;padding:14px 16px}
+.ev+.ev{border-top:1px solid var(--line)}
+.dt{text-align:center;line-height:1.2}
+.dt b{display:block;font-size:22px;font-weight:800}
+.dt span{font-size:12.5px;color:var(--muted)}
+.ev h3{margin:0;color:var(--ink);font-size:16px;font-weight:700}
+.ev p{margin:2px 0 0;color:var(--muted);font-size:13.5px}
+.tag{display:inline-block;font-size:12px;font-weight:700;border-radius:999px;padding:1px 9px;margin-right:6px;background:var(--soft);color:var(--ink)}
+.tag.emp{background:#DDF1E8;color:#14583D}.tag.free{background:#FBE5EE;color:#8A2A55}.tag.hr{background:#E1E8FA;color:#233F85}
+:root[data-theme=dark] .tag.emp{background:#173A2C;color:#9FE0C0}:root[data-theme=dark] .tag.free{background:#41202F;color:#F2B3CD}:root[data-theme=dark] .tag.hr{background:#1D2E55;color:#B5C9F6}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]) .tag.emp{background:#173A2C;color:#9FE0C0}:root:not([data-theme=light]) .tag.free{background:#41202F;color:#F2B3CD}:root:not([data-theme=light]) .tag.hr{background:#1D2E55;color:#B5C9F6}}
+.dd{font-weight:800;font-size:14px;white-space:nowrap;color:var(--primary)}
+.dd.soon{color:#C0392B}
+.dd.past{color:var(--muted);font-weight:500}
+.shift{color:var(--muted);font-size:12.5px}
+.misc{margin-top:30px;padding:20px 22px}
+.misc ul{margin:8px 0 0;padding-left:20px}
+.misc li+li{margin-top:6px}
+.bar2{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+@media(max-width:560px){.ev{grid-template-columns:54px 1fr}.ev .dd{grid-column:2;justify-self:start}}
+</style>
+</head>
+<body data-title="신고기한 캘린더">
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<header class="top"><div class="wrap bar">
+  <a class="brand" href="index.html" aria-label="처음으로">
+    <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><rect width="34" height="34" rx="9" fill="var(--primary)"/><path d="M9 12.5A3.5 3.5 0 0 1 12.5 9h9a3.5 3.5 0 0 1 3.5 3.5v5a3.5 3.5 0 0 1-3.5 3.5H17l-4 3.5V21h-.5A3.5 3.5 0 0 1 9 17.5z" fill="var(--on-primary)"/><circle cx="25.5" cy="9" r="4" fill="#FFD24A"/></svg>
+    <span><b data-cfg="company"></b><i>직원 포털 · <span data-cfg="team" style="display:inline"></span></i></span>
+  </a>
+  <nav class="mainnav" aria-label="주 메뉴"><a href="index.html">홈</a><a href="diagnosis.html">상황별 안내</a><a href="calculators.html#yearend">소득세·연말정산</a><a href="calendar.html">일정·도구</a></nav>
+  <nav class="acts" aria-label="도구">
+    <button class="pill" id="installBtn" type="button">앱 설치</button>
+    <button class="pill" id="themeBtn" type="button" aria-label="화면 밝기 바꾸기">어둡게</button>
+  </nav>
+</div></header>
+
+<main id="main" class="wrap">
+  <p class="sub"><a href="index.html">← 처음으로</a></p>
+  <div class="head">
+    <h1>세금 신고기한 캘린더</h1>
+    <p class="lead">앞으로 1년 동안의 신고·납부 일정을 D-day와 함께 보여 줍니다. 기한이 토요일·일요일·공휴일이면 다음 영업일로 표시합니다.</p>
+    <div class="chips" id="chips" role="group" aria-label="대상 선택"></div>
+  </div>
+  <div id="cal"></div>
+  <section class="misc card" aria-labelledby="miscH">
+    <h2 id="miscH">날짜가 정해져 있지 않은 일정</h2>
+    <ul>
+      <li><b>입사자 4대보험 취득 신고</b>: 건강보험은 입사일부터 14일 이내, 국민연금·고용·산재보험은 입사한 달의 다음 달 15일까지</li>
+      <li><b>퇴사자 퇴직금 지급</b>: 퇴직일로부터 14일 이내가 원칙</li>
+      <li><b>퇴사자 4대보험 상실 신고</b>: 건강보험은 퇴사일부터 14일 이내, 국민연금·고용·산재보험은 퇴사한 달의 다음 달 15일까지</li>
+      <li><b>경정청구</b>: 법정신고기한이 지난 후 5년 이내. 귀속연도별 마감일은 <a href="calculators.html#refund">경정청구 시뮬레이션</a>에서 확인</li>
+    </ul>
+  </section>
+  <div class="bar2"><button class="btn" id="ics" type="button">내 캘린더에 넣기(.ics 파일)</button><a class="btn ghost" href="calculators.html#penalty">기한을 놓쳤다면 가산세 계산</a></div>
+  <p class="lead" style="margin-top:18px;font-size:14px">일정은 <span data-cfg="rulesAsOf"></span> 기준입니다. 연말정산 간소화 자료 제공일처럼 국세청이 해마다 공지하는 날짜는 "예정"으로 표시했으니 공지를 확인하세요.</p>
+</main>
+<footer><div class="wrap">
+  <p><b data-cfg="company"></b> <b data-cfg="team"></b> · <span data-cfg="location"></span></p>
+  <p><a data-tel href="#"><span data-cfg="phone"></span></a> <span data-cfg="phoneExt"></span> · <a data-mail href="#"></a> · <span data-cfg="hours"></span></p>
+  <p>이 포털의 안내와 계산 결과는 참고용입니다. 법정 기준은 <span data-cfg="rulesAsOf"></span> 기준이며, 사내 규정이 법정 기준보다 유리하면 사내 규정을 따릅니다. 정확한 처리는 인사팀 확인 후 확정됩니다.</p>
+</div></footer>
+
+<script>
+/* 이 파일만 고치면 모든 페이지에 반영됩니다. */
+window.HR_CONFIG = {
+  company: "○○주식회사",
+  team: "인사팀",
+  phone: "02-0000-0000",
+  phoneExt: "내선 100",
+  email: "hr@example.com",
+  hours: "평일 09:00–18:00 (점심 12:00–13:00)",
+  location: "본사 ○층 인사팀",
+  // 사내 시스템 링크: url을 실제 주소로 바꾸세요
+  internalLinks: [
+    { name: "근태·휴가 시스템", desc: "연차 신청, 잔여 연차 확인", url: "#" },
+    { name: "급여명세서", desc: "월별 급여명세서 조회", url: "#" },
+    { name: "증명서 발급", desc: "재직·경력증명서 신청", url: "#" },
+    { name: "복지 포털", desc: "복지 포인트, 건강검진", url: "#" }
+  ],
+  // 공공기관 링크는 필요하면 추가·삭제하세요
+  publicLinks: [
+    { name: "고용24", desc: "육아휴직·실업급여 신청", url: "https://www.work24.go.kr/" },
+    { name: "4대사회보험 정보연계센터", desc: "가입 내역 조회", url: "https://www.4insure.or.kr/" },
+    { name: "국민연금", desc: "연금 가입 내역·예상 연금", url: "https://www.nps.or.kr/" },
+    { name: "국민건강보험", desc: "보험료 조회·피부양자", url: "https://www.nhis.or.kr/" },
+    { name: "홈택스", desc: "연말정산 간소화·소득금액증명", url: "https://www.hometax.go.kr/" },
+    { name: "국가법령정보센터", desc: "근로기준법 등 원문", url: "https://www.law.go.kr/" }
+  ],
+  // 4대보험 요율(근로자 부담, %): 매년 1월·7월 확인 후 고치세요
+  rates: { pension: 4.75, health: 3.595, ltc: 13.14, employment: 0.9, pensionMin: 400000, pensionMax: 6370000 },
+  // 연말정산 계산 기준(2026년 귀속). 세법이 바뀌면 인사팀이 확인 후 고치세요.
+  tax: {
+    // [과세표준 상한, 세율, 누진공제] 마지막 줄의 null은 상한 없음
+    brackets: [[14000000,0.06,0],[50000000,0.15,1260000],[88000000,0.24,5760000],[150000000,0.35,15440000],[300000000,0.38,19940000],[500000000,0.40,25940000],[1000000000,0.42,35940000],[null,0.45,65940000]],
+    basicDeduction: 1500000,          // 기본공제 1인당
+    standardCredit: 130000,           // 표준세액공제
+    childCredit: [250000, 300000, 400000], // 8세 이상 자녀: 첫째, 둘째, 셋째부터 1명당
+    cardMinRate: 0.25,                // 총급여의 25% 초과 사용분부터 공제
+    cardCreditRate: 0.15,             // 신용카드
+    cardDebitRate: 0.30,              // 체크카드·현금영수증
+    cardCaps: [[70000000,3000000],[120000000,2500000],[null,2000000]] // [총급여 상한, 공제 한도]
+  },
+  // 가산세·환급 기준(국세기본법). 개정되면 인사팀이 확인 후 고치세요.
+  penalty: {
+    noFile: 0.20, underFile: 0.10, fraud: 0.40, // 무신고 20%, 과소신고 10%, 부정행위 40%
+    daily: 0.00022                               // 납부지연 1일 10만분의 22
+  },
+  rulesAsOf: "2026년 11월"
+};
+
+</script>
+<script src="config.js"></script>
+<script>
+(function(){
+  var C=window.HR_CONFIG||{};
+  var root=document.documentElement;
+  try{var t=localStorage.getItem('hr-theme');if(t)root.setAttribute('data-theme',t)}catch(e){}
+  document.querySelectorAll('[data-cfg]').forEach(function(el){var v=C[el.getAttribute('data-cfg')];if(v!=null)el.textContent=v});
+  document.querySelectorAll('[data-tel]').forEach(function(el){el.href='tel:'+String(C.phone||'').replace(/[^0-9+]/g,'')});
+  document.querySelectorAll('[data-mail]').forEach(function(el){el.href='mailto:'+(C.email||'');if(!el.textContent.trim())el.textContent=C.email});
+  var pg=document.body.getAttribute('data-title')||'';
+  document.title=(pg?pg+' · ':'')+(C.company||'')+' '+(C.team||'');
+  var tb=document.getElementById('themeBtn');
+  function isDark(){var a=root.getAttribute('data-theme');return a?a==='dark':matchMedia('(prefers-color-scheme: dark)').matches}
+  function label(){if(tb)tb.textContent=isDark()?'밝게':'어둡게'}
+  label();
+  if(tb)tb.addEventListener('click',function(){var n=isDark()?'light':'dark';root.setAttribute('data-theme',n);try{localStorage.setItem('hr-theme',n)}catch(e){}label()});
+  if('serviceWorker' in navigator&&location.protocol.indexOf('http')===0){navigator.serviceWorker.register('sw.js').catch(function(){})}
+  window.HR_STORE={get:function(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set:function(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+})();
+
+</script>
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)};
+  var WD=['일','월','화','수','목','금','토'];
+  // 공휴일(대체공휴일 포함). 해마다 인사팀이 확인해 추가하세요.
+  var HOL={
+    2026:['01-01','02-16','02-17','02-18','03-02','05-05','05-25','06-03','08-17','09-24','09-25','09-28','10-05','10-09','12-25'],
+    2027:['01-01','02-08','02-09','03-01','05-05','05-13','08-16','09-14','09-15','09-16','10-04','10-11','12-27']
+  };
+  function pad(n){return String(n).padStart(2,'0')}
+  function key(d){return pad(d.getMonth()+1)+'-'+pad(d.getDate())}
+  function isOff(d){var w=d.getDay();return w===0||w===6||((HOL[d.getFullYear()]||[]).indexOf(key(d))>-1)}
+  function shift(d){var x=new Date(d.getFullYear(),d.getMonth(),d.getDate()),moved=false;while(isOff(x)){x.setDate(x.getDate()+1);moved=true}return {d:x,moved:moved}}
+  var EV=[
+    {t:'연말정산 간소화 자료 제공 시작',w:'emp',n:'국세청 홈택스. 날짜는 해마다 공지로 확정',fix:[1,15],soft:1},
+    {t:'연말정산 환급·추징 반영(2월분 급여 지급 시)',w:'emp',n:'회사 급여일 기준. 환급은 2월분 급여에 합산',fix:[2,25],soft:1},
+    {t:'종합소득세·개인지방소득세 신고·납부 마감',w:'emp',n:'프리랜서·부업 소득, 근무지 2곳 이상, 연말정산 누락 확인 대상',fix:[5,31]},
+    {t:'종합소득세·개인지방소득세 신고·납부 마감',w:'free',n:'3.3% 원천징수 소득이 있다면 대상. 지방소득세는 위택스에서 따로 신고',fix:[5,31]},
+    {t:'근로장려금 정기 신청 마감',w:'emp',n:'소득·재산 요건에 해당하는 경우',fix:[5,31]},
+    {t:'자동차세 1기분 납부 마감',w:'emp',n:'납기 6월 16일~30일',fix:[6,30]},
+    {t:'재산세 1기분 납부 마감',w:'emp',n:'주택 1/2과 건축물. 납기 7월 16일~31일',fix:[7,31]},
+    {t:'재산세 2기분 납부 마감',w:'emp',n:'주택 1/2과 토지. 납기 9월 16일~30일',fix:[9,30]},
+    {t:'종합소득세 중간예납 납부',w:'free',n:'중간예납 대상자만. 고지서 확인',fix:[11,30]},
+    {t:'종합부동산세 납부 마감',w:'emp',n:'납기 12월 1일~15일',fix:[12,15]},
+    {t:'자동차세 2기분 납부 마감',w:'emp',n:'납기 12월 16일~31일',fix:[12,31]},
+    {t:'부가가치세 확정신고·납부(개인사업자)',w:'free',n:'1기(1~6월분)는 7월 25일, 2기(7~12월분)는 다음 해 1월 25일',fix:[1,25]},
+    {t:'부가가치세 확정신고·납부(개인사업자)',w:'free',n:'1기(1~6월분)',fix:[7,25]},
+    {t:'원천세 신고·납부(전월 지급분)',w:'hr',n:'매월 10일. 반기별 납부 승인 사업장은 7월·1월',monthly:10},
+    {t:'근로·퇴직·사업소득 지급명세서 제출',w:'hr',n:'전년도 지급분. 연말정산 결과 포함',fix:[3,10]},
+    {t:'건강보험 보수총액 통보',w:'hr',n:'전년도 보수총액',fix:[3,10]},
+    {t:'고용·산재보험 보수총액 신고',w:'hr',n:'전년도 보수총액',fix:[3,15]}
+  ];
+  var WHO={emp:'직원·개인',free:'프리랜서·부업',hr:'인사·급여'};
+  var cur='all',list=[];
+  function build(){
+    var now=new Date(),today=new Date(now.getFullYear(),now.getMonth(),now.getDate()),end=new Date(today.getFullYear()+1,today.getMonth(),today.getDate());
+    list=[];
+    for(var y=today.getFullYear();y<=end.getFullYear();y++){
+      EV.forEach(function(e){
+        var dates=[];
+        if(e.monthly){for(var m=0;m<12;m++)dates.push(new Date(y,m,e.monthly))}
+        else dates.push(new Date(y,e.fix[0]-1,e.fix[1]));
+        dates.forEach(function(d){
+          var s=e.soft?{d:d,moved:false}:shift(d);
+          if(s.d<today||s.d>end)return;
+          list.push({e:e,d:s.d,moved:s.moved,orig:d});
+        });
+      });
+    }
+    list.sort(function(a,b){return a.d-b.d||a.e.w.localeCompare(b.e.w)});
+    return today;
+  }
+  function render(){
+    var today=build();
+    var rows=list.filter(function(x){return cur==='all'||x.e.w===cur});
+    var out='',last='';
+    rows.forEach(function(x){
+      var mk=x.d.getFullYear()+'년 '+(x.d.getMonth()+1)+'월';
+      if(mk!==last){if(last)out+='</ul></section>';out+='<section class="month"><h2>'+mk+'</h2><ul class="list">';last=mk}
+      var diff=Math.round((x.d-today)/864e5);
+      var dd=diff===0?'오늘':'D-'+diff;
+      out+='<li class="ev"><div class="dt"><b>'+x.d.getDate()+'</b><span>'+WD[x.d.getDay()]+'요일</span></div><div><h3><span class="tag '+x.e.w+'">'+WHO[x.e.w]+'</span>'+x.e.t+(x.e.soft?' <span class="shift">(예정)</span>':'')+'</h3><p>'+x.e.n+(x.moved?' <span class="shift">· 원래 '+(x.orig.getMonth()+1)+'월 '+x.orig.getDate()+'일, 휴일이라 다음 영업일</span>':'')+'</p></div><div class="dd'+(diff<=7?' soon':'')+'">'+dd+'</div></li>';
+    });
+    if(last)out+='</ul></section>';
+    $('cal').innerHTML=out||'<p class="lead">표시할 일정이 없습니다.</p>';
+  }
+  function chips(){
+    var all=[['all','전체'],['emp','직원·개인'],['free','프리랜서·부업'],['hr','인사·급여 담당']];
+    $('chips').innerHTML=all.map(function(c){return '<button type="button" data-w="'+c[0]+'" aria-pressed="'+(cur===c[0])+'">'+c[1]+'</button>'}).join('');
+  }
+  $('chips').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;cur=b.dataset.w;chips();render()});
+  $('ics').addEventListener('click',function(){
+    var rows=list.filter(function(x){return cur==='all'||x.e.w===cur});
+    var L=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//hr-portal//KO','CALSCALE:GREGORIAN'];
+    rows.forEach(function(x,i){
+      var ds=x.d.getFullYear()+pad(x.d.getMonth()+1)+pad(x.d.getDate());
+      var nx=new Date(x.d.getFullYear(),x.d.getMonth(),x.d.getDate()+1);var de=nx.getFullYear()+pad(nx.getMonth()+1)+pad(nx.getDate());
+      L.push('BEGIN:VEVENT','UID:hr-'+ds+'-'+i+'@portal','DTSTAMP:'+ds+'T000000Z','DTSTART;VALUE=DATE:'+ds,'DTEND;VALUE=DATE:'+de,'SUMMARY:'+x.e.t.replace(/[,;]/g,' '),'DESCRIPTION:'+x.e.n.replace(/[,;]/g,' '),'END:VEVENT');
+    });
+    L.push('END:VCALENDAR');
+    var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([L.join('\r\n')],{type:'text/calendar'}));a.download='tax-calendar.ics';document.body.appendChild(a);a.click();a.remove();
+  });
+  chips();render();
+})();
+</script>
+</body>
+</html>
